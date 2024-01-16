@@ -33,7 +33,6 @@ public class MemberCRUDTest {
                 .build();
 
         em.persist(member);
-
         assertThat(member.getId()).isEqualTo(1L);
     }
 

@@ -1,6 +1,6 @@
-package com.bnomad.IAteIt.service;
+package com.bnomad.IAteIt.domain.member.service;
 
-import com.bnomad.IAteIt.repository.MemberRepository;
+import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

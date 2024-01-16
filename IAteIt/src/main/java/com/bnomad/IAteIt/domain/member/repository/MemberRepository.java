@@ -1,4 +1,4 @@
-package com.bnomad.IAteIt.repository;
+package com.bnomad.IAteIt.domain.member.repository;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
