@@ -1,5 +1,6 @@
-package com.bnomad.IAteIt.domain;
+package com.bnomad.IAteIt.domain.member.entity;
 
+import com.bnomad.IAteIt.domain.Meal;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,15 +11,14 @@ import java.util.List;
 @Builder
 @Getter
 @Entity
-@Table(name = "users")
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     private List<Meal> meals = new ArrayList<>();
 
     private String nickname;

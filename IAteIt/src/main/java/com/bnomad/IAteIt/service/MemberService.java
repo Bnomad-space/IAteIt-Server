@@ -1,14 +1,14 @@
 package com.bnomad.IAteIt.service;
 
-import com.bnomad.IAteIt.repository.UserRepository;
+import com.bnomad.IAteIt.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
 
 
 }

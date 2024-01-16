@@ -1,22 +1,25 @@
 package com.bnomad.IAteIt.create;
 
-import com.bnomad.IAteIt.domain.Comment;
+import com.bnomad.IAteIt.domain.comment.entity.Comment;
 import com.bnomad.IAteIt.domain.Meal;
 import com.bnomad.IAteIt.domain.Plate;
-import com.bnomad.IAteIt.domain.User;
+import com.bnomad.IAteIt.domain.member.entity.Member;
 import jakarta.persistence.EntityManager;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 @Transactional
-public class UserCRUDTest {
+public class MemberCRUDTest {
 
     @Autowired
     private EntityManager em;
@@ -24,28 +27,28 @@ public class UserCRUDTest {
     @Test
     public void User_생성_테스트() {
 
-        User user = User.builder()
+        Member member = Member.builder()
                 .nickname("user1")
                 .profileImage("httpdadsasdfasdf")
                 .build();
 
-        em.persist(user);
+        em.persist(member);
 
-        Assertions.assertThat(user.getId()).isEqualTo(1L);
+        assertThat(member.getId()).isEqualTo(1L);
     }
 
     @Test
     @Rollback(value = false)
     public void Plate_생성_테스트() {
-        User user = User.builder()
+        Member member = Member.builder()
                 .nickname("user1")
                 .profileImage("httpdadsasdfasdf")
                 .build();
-        em.persist(user);
+        em.persist(member);
 
         Meal meal = Meal.builder()
                 .caption("delicious")
-                .user(user)
+                .member(member)
                 .location("을지로")
                 .build();
 
@@ -54,7 +57,7 @@ public class UserCRUDTest {
         Comment comment = Comment.builder()
                 .meal(meal)
                 .content("괜찮네")
-                .fromUser(user.getId())
+                .fromUser(member.getId())
                 .uploadDateTime(LocalDateTime.now())
                 .modifiedDateTime(LocalDateTime.now())
                 .build();

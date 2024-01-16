@@ -1,5 +1,6 @@
-package com.bnomad.IAteIt.domain;
+package com.bnomad.IAteIt.domain.comment.entity;
 
+import com.bnomad.IAteIt.domain.Meal;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,5 +1,7 @@
 package com.bnomad.IAteIt.domain;
 
+import com.bnomad.IAteIt.domain.comment.entity.Comment;
+import com.bnomad.IAteIt.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +20,8 @@ public class Meal {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "meal")
     private List<Plate> plates = new ArrayList<>();
