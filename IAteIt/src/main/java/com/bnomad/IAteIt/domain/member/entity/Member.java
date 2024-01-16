@@ -2,6 +2,7 @@ package com.bnomad.IAteIt.domain.member.entity;
 
 import com.bnomad.IAteIt.domain.Meal;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Builder
 @Getter
+@AllArgsConstructor
 @Entity
 public class Member {
 
@@ -22,6 +24,11 @@ public class Member {
     private List<Meal> meals = new ArrayList<>();
 
     private String nickname;
+
+    public Member() {
+
+    }
+
     private String profileImage;
 
 
