@@ -1,10 +1,12 @@
 package com.bnomad.IAteIt.domain.member.entity;
 
 import com.bnomad.IAteIt.domain.Meal;
+import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -32,6 +34,9 @@ public class Member {
     private String profileImage;
 
 
+    public void nicknameChange(String nickname) {
+        this.nickname = nickname;
+    }
 
 
 }

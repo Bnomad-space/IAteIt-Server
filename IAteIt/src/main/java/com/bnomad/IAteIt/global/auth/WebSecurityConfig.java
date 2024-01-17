@@ -13,9 +13,8 @@ public class WebSecurityConfig {
     // 스프링 시큐리티 접속 막아주는 것
     @Bean
     protected SecurityFilterChain config(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> {
-            auth.anyRequest().permitAll();
-            }
+        http.authorizeHttpRequests(auth ->
+            auth.anyRequest().permitAll()
         );
         return http.build();
     }

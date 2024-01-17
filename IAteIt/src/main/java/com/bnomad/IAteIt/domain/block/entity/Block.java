@@ -1,21 +1,24 @@
 package com.bnomad.IAteIt.domain.block.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.bnomad.IAteIt.domain.member.entity.Member;
+import com.bnomad.IAteIt.global.entity.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
 @Getter
-public class Block {
+public class Block extends BaseEntity {
 
     @Id
     @GeneratedValue
     @Column(name = "block_id")
     private Long id;
 
-    private Long blockingMemberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member blocking_member;
+
+
     private Long blockedMemberId;
 
 }

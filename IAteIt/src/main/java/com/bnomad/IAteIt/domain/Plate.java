@@ -1,5 +1,6 @@
 package com.bnomad.IAteIt.domain;
 
+import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @Entity
-public class Plate {
+public class Plate extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -23,6 +24,4 @@ public class Plate {
 
     private String imageUrl;
 
-    private LocalDateTime uploadTime;
-    private LocalDateTime modifiedTime;
 }

@@ -19,7 +19,6 @@ public class MemberController {
 
     private final MemberService memberService;
 
-
     @PostMapping("/join")
     public ResponseEntity<HashMap<String, String>> join() {
         HashMap<String, String> accessAndrefreshToken = new HashMap<String, String>();

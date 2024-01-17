@@ -2,6 +2,7 @@ package com.bnomad.IAteIt.domain;
 
 import com.bnomad.IAteIt.domain.comment.entity.Comment;
 import com.bnomad.IAteIt.domain.member.entity.Member;
+import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Builder
 @Entity
-public class Meal {
+public class Meal extends BaseEntity {
 
     @Id
     @GeneratedValue
