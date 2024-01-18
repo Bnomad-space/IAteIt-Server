@@ -1,5 +1,6 @@
-package com.bnomad.IAteIt.domain;
+package com.bnomad.IAteIt.domain.meal.entity;
 
+import com.bnomad.IAteIt.domain.plate.entity.Plate;
 import com.bnomad.IAteIt.domain.comment.entity.Comment;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
@@ -34,6 +35,18 @@ public class Meal extends BaseEntity {
     private String caption;
 
     private String location;
+
+    /**
+     *
+     */
+
+    public void captionChange(String newCaption) {
+        this.caption = newCaption;
+    }
+
+    public void locationChange(String newLocation) {
+        this.location = newLocation;
+    }
 
 
 }

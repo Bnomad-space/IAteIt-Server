@@ -1,6 +1,6 @@
 package com.bnomad.IAteIt.domain.comment.entity;
 
-import com.bnomad.IAteIt.domain.Meal;
+import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -21,11 +21,13 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "meal_id")
     private Meal meal;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member from_member;
 
-    private Long toMemberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "to_member_id")
+    private Member to_member;
 
     private String content;
 

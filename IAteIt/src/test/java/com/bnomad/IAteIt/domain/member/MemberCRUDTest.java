@@ -1,4 +1,4 @@
-package com.bnomad.IAteIt.member;
+package com.bnomad.IAteIt.domain.member;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
@@ -21,7 +21,6 @@ public class MemberCRUDTest {
     private MemberRepository memberRepository;
 
     @Test
-    @Rollback(value = false)
     public void User_생성_테스트() {
         Member member = Member.builder()
                 .nickname("user1")
@@ -34,7 +33,6 @@ public class MemberCRUDTest {
     }
 
     @Test
-    @Rollback(value = false)
     public void Member_modified_시간_테스트() {
         Member member = memberRepository.findMemberByNickname("user1");
         String newName = "newName";

@@ -1,12 +1,10 @@
-package com.bnomad.IAteIt.domain;
+package com.bnomad.IAteIt.domain.plate.entity;
 
+import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
-
 
 @Getter
 @Builder

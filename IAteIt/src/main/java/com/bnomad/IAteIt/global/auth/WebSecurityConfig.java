@@ -16,6 +16,12 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(auth ->
             auth.anyRequest().permitAll()
         );
+        // 갑자기 postMapping을 하니까 403 forbidden 에러가 났음
+        // csrf 때문에 post 요청이 막히는 것임
+        http.csrf(customizer ->
+                customizer
+                        .disable()
+        );
         return http.build();
     }
 
