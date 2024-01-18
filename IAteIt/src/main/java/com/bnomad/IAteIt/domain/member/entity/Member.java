@@ -28,15 +28,16 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member")
     private List<Meal> meals = new ArrayList<>();
 
+    private String profileImage;
     private String nickname;
 
     private String email;
 
+    @Enumerated(value = EnumType.STRING)
+    private MemberRole memberRole;
+
     @OneToMany(mappedBy = "blocking_member")
     private List<Block> blockList = new ArrayList<>();
-
-
-    private String profileImage;
 
 
     public void nicknameChange(String nickname) {
