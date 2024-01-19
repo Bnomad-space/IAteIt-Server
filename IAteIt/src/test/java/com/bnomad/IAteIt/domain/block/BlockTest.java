@@ -30,27 +30,27 @@ public class BlockTest {
     @Test
     @Rollback(value = false)
     public void 멤버_block_test() {
-        Member member1 = MemberUtil.testMember1();
-        Member member2 = MemberUtil.testMember2();
+        Member member1 = MemberUtil.testMemberMemberRole();
+        Member member2 = MemberUtil.testMemberNoneRole();
 
         memberRepository.save(member1);
         memberRepository.save(member2);
-        blockService.blockMember(member1.getId(), member2.getId());
-        member1.block_Member(member2);
+        blockService.blockMember(member2.getId(), member1.getId());
+        member2.block_Member(member1);
 
         List<Block> blocks = blockRepository.findAll();
         for (Block block : blocks) {
             System.out.println("blocked Member = " + block.getBlocked_member());
         }
-        Assertions.assertThat(blocks.get(0).getBlocking_member().getId()).isEqualTo(member1.getId());
-        Assertions.assertThat(blocks.get(0).getBlocked_member().getId()).isEqualTo(member2.getId());
+        Assertions.assertThat(blocks.get(0).getBlocking_member().getId()).isEqualTo(member2.getId());
+        Assertions.assertThat(blocks.get(0).getBlocked_member().getId()).isEqualTo(member1.getId());
 
     }
 
     @Test
     public void Block객체로_멤버접근() {
-        Member member1 = MemberUtil.testMember1();
-        Member member2 = MemberUtil.testMember2();
+        Member member1 = MemberUtil.testMemberMemberRole();
+        Member member2 = MemberUtil.testMemberNoneRole();
 
         memberRepository.save(member1);
         memberRepository.save(member2);
