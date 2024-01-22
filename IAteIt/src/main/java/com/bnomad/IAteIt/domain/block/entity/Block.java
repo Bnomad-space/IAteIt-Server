@@ -18,8 +18,8 @@ public class Block extends BaseEntity {
 
     @Builder
     public Block(Member blocking_member, Member blocked_member) {
-        this.blocking_member = blocking_member;
-        this.blocked_member = blocked_member;
+        this.blockingMember = blocking_member;
+        this.blockedMember = blocked_member;
     }
 
     public Block() {
@@ -27,11 +27,11 @@ public class Block extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member blocking_member;
+    private Member blockingMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blocked_member_id")
-    private Member blocked_member;
+    private Member blockedMember;
 
 
 }

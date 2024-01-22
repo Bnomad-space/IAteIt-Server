@@ -37,7 +37,7 @@ public class Member extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private MemberRole memberRole;
 
-    @OneToMany(mappedBy = "blocking_member")
+    @OneToMany(mappedBy = "blockingMember")
     private List<Block> blockList = new ArrayList<>();
 
     public void editProfile(MemberEditRequest request) {

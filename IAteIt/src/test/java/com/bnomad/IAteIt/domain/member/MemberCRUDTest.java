@@ -6,6 +6,7 @@ import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,9 +21,11 @@ public class MemberCRUDTest {
     private MemberRepository memberRepository;
 
     @Test
+    @Rollback(value = false)
     public void User_생성_테스트() {
         Member member = Member.builder()
                 .nickname("user1")
+                .email("asdfasdas@google.com")
                 .profileImage("http://asdfasdfsdfsd")
                 .build();
 

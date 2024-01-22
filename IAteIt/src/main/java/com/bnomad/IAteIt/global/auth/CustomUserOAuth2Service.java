@@ -88,7 +88,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
             Session save = sessionRepository.save(session);
 
             // session의 id로 저장함
-            httpSession.setAttribute(String.valueOf(save.getId()), save);
+            httpSession.setAttribute("member", save.getId());
 
             return savedMember;
         }
