@@ -27,8 +27,8 @@ public class BlockService {
                 .orElseThrow(() -> new RuntimeException("blocked 멤버 id가 없습니다"));
 
         Block block = Block.builder()
-                .blocking_member(blockingMember)
-                .blocked_member(blockedMember)
+                .blockingMember(blockingMember)
+                .blockedMember(blockedMember)
                 .build();
         blockRepository.save(block);
     }

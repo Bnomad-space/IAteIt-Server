@@ -47,8 +47,8 @@ public class Member extends BaseEntity {
 
     public void block_Member(Member blockedMember) {
         Block block = Block.builder()
-                .blocking_member(this)
-                .blocked_member(blockedMember)
+                .blockingMember(this)
+                .blockedMember(blockedMember)
                 .build();
         this.blockList.add(block);
     }

@@ -17,9 +17,9 @@ public class Block extends BaseEntity {
     private Long id;
 
     @Builder
-    public Block(Member blocking_member, Member blocked_member) {
-        this.blockingMember = blocking_member;
-        this.blockedMember = blocked_member;
+    public Block(Member blockingMember, Member blockedMember) {
+        this.blockingMember = blockingMember;
+        this.blockedMember = blockedMember;
     }
 
     public Block() {
