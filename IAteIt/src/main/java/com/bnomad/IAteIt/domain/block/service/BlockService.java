@@ -21,12 +21,17 @@ public class BlockService {
     private final BlockRepository blockRepository;
     private final MemberRepository memberRepository;
 
-    // TODO: 같은 유저를 차단하는 중복 처리 필요
     public void blockMember(BlockingMemberRequest blockingMemberRequest) {
         Member blockingMember = memberRepository.findById(blockingMemberRequest.getBlockingMemberId())
                 .orElseThrow(() -> new RuntimeException("blocking 멤버 id가 없습니다."));
         Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
                 .orElseThrow(() -> new RuntimeException("blocked 멤버 id가 없습니다"));
+
+        List<Block> allByBlockingMemberId = blockRepository.findAllByBlockingMemberId(blockingMember.getId());
+        if ((allByBlockingMemberId.stream().filter(a -> (a.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
+            System.out.println("이미 저장되어 있음");
+            return;
+        }
 
         Block block = Block.builder()
                 .blockingMember(blockingMember)
@@ -34,7 +39,6 @@ public class BlockService {
                 .build();
         blockRepository.save(block);
     }
-
     public List<BlockedMemberResponse> blockedMemberList(Long memberId) {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("유효한 멤버 id가 아닙니다."));
