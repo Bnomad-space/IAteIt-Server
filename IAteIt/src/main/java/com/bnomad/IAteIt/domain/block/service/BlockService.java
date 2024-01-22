@@ -1,7 +1,8 @@
 package com.bnomad.IAteIt.domain.block.service;
 
 import com.bnomad.IAteIt.domain.block.entity.Block;
-import com.bnomad.IAteIt.domain.block.entity.BlockedMemberResponse;
+import com.bnomad.IAteIt.domain.block.entity.dto.BlockedMemberResponse;
+import com.bnomad.IAteIt.domain.block.entity.dto.BlockingMemberRequest;
 import com.bnomad.IAteIt.domain.block.repository.BlockRepository;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
@@ -20,10 +21,11 @@ public class BlockService {
     private final BlockRepository blockRepository;
     private final MemberRepository memberRepository;
 
-    public void blockMember(Long blockingId, Long blockedId) {
-        Member blockingMember = memberRepository.findById(blockingId)
+    // TODO: 같은 유저를 차단하는 중복 처리 필요
+    public void blockMember(BlockingMemberRequest blockingMemberRequest) {
+        Member blockingMember = memberRepository.findById(blockingMemberRequest.getBlockingMemberId())
                 .orElseThrow(() -> new RuntimeException("blocking 멤버 id가 없습니다."));
-        Member blockedMember = memberRepository.findById(blockedId)
+        Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
                 .orElseThrow(() -> new RuntimeException("blocked 멤버 id가 없습니다"));
 
         Block block = Block.builder()

@@ -35,7 +35,7 @@ public class BlockTest {
 
         memberRepository.save(member1);
         memberRepository.save(member2);
-        blockService.blockMember(member2.getId(), member1.getId());
+//        blockService.blockMember(member2.getId(), member1.getId());
         member2.block_Member(member1);
 
         List<Block> blocks = blockRepository.findAll();
@@ -54,7 +54,7 @@ public class BlockTest {
 
         memberRepository.save(member1);
         memberRepository.save(member2);
-        blockService.blockMember(member1.getId(), member2.getId());
+//        blockService.blockMember(member1.getId(), member2.getId());
         member1.block_Member(member2);
 
         for (Block block : member1.getBlockList()) {

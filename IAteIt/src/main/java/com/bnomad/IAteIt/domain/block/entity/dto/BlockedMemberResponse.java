@@ -1,4 +1,4 @@
-package com.bnomad.IAteIt.domain.block.entity;
+package com.bnomad.IAteIt.domain.block.entity.dto;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import lombok.Getter;
