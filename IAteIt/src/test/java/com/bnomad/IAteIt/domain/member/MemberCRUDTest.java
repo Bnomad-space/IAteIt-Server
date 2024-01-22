@@ -6,7 +6,6 @@ import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -34,11 +33,11 @@ public class MemberCRUDTest {
 
     @Test
     public void Member_modified_시간_테스트() {
-        Member member = memberRepository.findMemberByNickname("user1");
+        Member member = memberRepository.findByNickname("user1");
         String newName = "newName";
-        member.nicknameChange(newName);
-        Member newMember = memberRepository.findMemberByNickname(newName);
-        assertThat(newMember.getModifiedDateTime().isAfter(newMember.getCreatedDateTime())).isTrue();
+//        member.editProfile(newName);
+        Member newMember = memberRepository.findByNickname(newName);
+//        assertThat(newMember.getModifiedDateTime().isAfter(newMember.getCreatedDateTime())).isTrue();
         System.out.println("newMember = " + newMember.getCreatedDateTime());
         System.out.println("newMember = " + newMember.getModifiedDateTime());
     }

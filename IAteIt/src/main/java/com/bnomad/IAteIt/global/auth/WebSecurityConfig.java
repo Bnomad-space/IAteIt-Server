@@ -36,6 +36,10 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(auth ->
                         auth
+//                                .requestMatchers("/auth/**")
+//                                .permitAll()
+//                                .anyRequest()
+//                                .authenticated()
 //                                .requestMatchers("/api/v1/**")
 //                                .hasRole(MemberRole.MEMBER.name())
 
@@ -45,7 +49,8 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.GET)
                                 .permitAll()
 
-
+                                .requestMatchers(HttpMethod.PUT)
+                                .permitAll()
                 )
                 .oauth2Login(oauth2 ->
                         // oauth2 인증이 끝나면 잡아가는 포인트
@@ -55,7 +60,6 @@ public class WebSecurityConfig {
                                                 .userService(customUserOAuth2Service)
                                 )
                                 .defaultSuccessUrl("/")
-
                 );
 
         return http.build();

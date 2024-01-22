@@ -1,12 +1,15 @@
 package com.bnomad.IAteIt.domain.member.service;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberEditRequest;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
+import com.bnomad.IAteIt.domain.member.repository.SessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,16 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member findByNickname() {
-        return memberRepository.findMemberByNickname("user1");
+        return memberRepository.findByNickname("user1");
+    }
+
+    /**
+     * 멤버 정보 변경
+     */
+    public void editProfile(MemberEditRequest memberEditRequest) {
+        Member findMember = memberRepository.findById(memberEditRequest.getMemberId())
+                .orElseThrow();
+        findMember.editProfile(memberEditRequest);
     }
 
 }

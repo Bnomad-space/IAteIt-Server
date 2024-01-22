@@ -2,7 +2,9 @@ package com.bnomad.IAteIt.global.auth;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.entity.MemberRole;
+import com.bnomad.IAteIt.domain.member.entity.Session;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
+import com.bnomad.IAteIt.domain.member.repository.SessionRepository;
 import com.bnomad.IAteIt.domain.member.service.MemberService;
 import com.bnomad.IAteIt.global.auth.dto.OAuth2Attributes;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +30,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
     private final MemberService memberService;
 
     private final HttpSession httpSession;
+    private final SessionRepository sessionRepository;
 
 
     @Override
@@ -47,8 +50,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
-        // session 정보 저장으로 확인할 수도 있긴함
-        httpSession.setAttribute("member", userNameAttributeName);
+//        httpSession.setAttribute("member", userNameAttributeName);
         OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Member member = saveOrUpdate(attributes);
 
@@ -78,10 +80,18 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
             System.out.println("REFRESH TOKEN ACTION TRIGGER");
             return null;
         } else {
-            return memberRepository.save(buildMember);
+            Member savedMember = memberRepository.save(buildMember);
+            Session session = Session.builder()
+                    .member(savedMember)
+                    .build();
+
+            Session save = sessionRepository.save(session);
+
+            // session의 id로 저장함
+            httpSession.setAttribute(String.valueOf(save.getId()), save);
+
+            return savedMember;
         }
-
     }
-
 
 }

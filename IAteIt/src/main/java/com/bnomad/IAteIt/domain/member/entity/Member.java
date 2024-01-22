@@ -2,6 +2,7 @@ package com.bnomad.IAteIt.domain.member.entity;
 
 import com.bnomad.IAteIt.domain.block.entity.Block;
 import com.bnomad.IAteIt.domain.meal.entity.Meal;
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberEditRequest;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,12 +40,10 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "blocking_member")
     private List<Block> blockList = new ArrayList<>();
 
-
-    public void nicknameChange(String nickname) {
-        this.nickname = nickname;
+    public void editProfile(MemberEditRequest request) {
+        this.nickname = request.getNickname();
+        this.profileImage = request.getProfileImage();
     }
-
-
 
     public void block_Member(Member blockedMember) {
         Block block = Block.builder()

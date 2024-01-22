@@ -9,9 +9,12 @@ public enum ResultCode {
 
 
     MEMBER_FIND_SUCCESS(200, "MEM001", "멤버 조회에 성공했습니다"),
+    MEMBER_EDIT_SUCCESS(200, "MEM002", "멤버 정보 변경에 성공했습니다"),
 
+    LOGIN_MEMBER_FIND_SUCCESS(200, "LM001", "로그인된 멤버 조회에 성공했습니다"),
 
-    MEAL_CREATE_SUCCESS(200, "ML001", "Meal 생성에 성공했습니다.");
+    MEAL_CREATE_SUCCESS(200, "ML001", "Meal 생성에 성공했습니다."),
+    ;
 
 
     private final int status;
