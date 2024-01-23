@@ -75,17 +75,4 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
 }
-
-//                                .requestMatchers("/api/v1/**")
-//                                .hasRole(Role.MEMBER.name())
-
-//                                        .requestMatchers(HttpMethod.POST)
-//                                        .permitAll()
-//
-//                                        .requestMatchers(HttpMethod.GET)
-//                                        .permitAll()
-//
-//                                        .requestMatchers(HttpMethod.PUT)
-//                                        .permitAll()

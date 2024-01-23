@@ -36,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } else {
             System.out.println("token = 토큰 값이 어서 return 되는 중" + token);
-//            response.sendError(404, "jwt 토큰 값이 없습니다.");
         }
         filterChain.doFilter(request, response);
 
