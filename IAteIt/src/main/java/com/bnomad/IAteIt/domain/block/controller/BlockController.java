@@ -35,7 +35,7 @@ public class BlockController {
      * 멤버 차단 목록 확인
      * httpSession으로부터 멤버 정보를 가져옴
      */
-    @GetMapping("/list")
+    @GetMapping("")
     public ResponseEntity<ResultResponse> blockedMemberList(@RequestParam("memberId") Long memberId) {
         System.out.println("memberId = " + memberId);
         List<BlockedMemberResponse> blockedMemberList = blockService.blockedMemberList(memberId);

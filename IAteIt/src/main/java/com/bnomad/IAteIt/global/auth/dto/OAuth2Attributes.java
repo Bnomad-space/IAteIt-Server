@@ -2,7 +2,7 @@ package com.bnomad.IAteIt.global.auth.dto;
 
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
-import com.bnomad.IAteIt.domain.member.entity.MemberRole;
+import com.bnomad.IAteIt.domain.member.entity.Role;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -80,7 +80,7 @@ public class OAuth2Attributes {
                 .nickname(nickname)
                 .email(email)
                 .blockList(new ArrayList<>())
-                .memberRole(MemberRole.MEMBER)
+                .memberRole(Role.MEMBER)
                 .build();
     }
 }

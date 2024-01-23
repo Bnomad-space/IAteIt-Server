@@ -19,7 +19,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/join")
+    @PostMapping("")
     public ResponseEntity<HashMap<String, String>> join() {
         HashMap<String, String> accessAndrefreshToken = new HashMap<String, String>();
         accessAndrefreshToken = memberService.join();
@@ -28,7 +28,7 @@ public class MemberController {
 
     @GetMapping("/profile")
     public ResponseEntity<ResultResponse> memberProfile() {
-        Member byNickname = memberService.findByNickname();
+        Member byNickname = memberService.findByNickname("");
         return ResponseEntity.ok(ResultResponse.of(MEMBER_FIND_SUCCESS, byNickname));
     }
 

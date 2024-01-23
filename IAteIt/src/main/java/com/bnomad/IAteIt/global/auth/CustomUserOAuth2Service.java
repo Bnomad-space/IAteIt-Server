@@ -1,7 +1,7 @@
 package com.bnomad.IAteIt.global.auth;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
-import com.bnomad.IAteIt.domain.member.entity.MemberRole;
+import com.bnomad.IAteIt.domain.member.entity.Role;
 import com.bnomad.IAteIt.domain.member.entity.Session;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import com.bnomad.IAteIt.domain.member.repository.SessionRepository;
@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -55,7 +54,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         Member member = saveOrUpdate(attributes);
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(MemberRole.MEMBER.name())),
+                Collections.singleton(new SimpleGrantedAuthority(Role.MEMBER.name())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
@@ -70,7 +69,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         Member buildMember = Member.builder()
                 .email(attributes.getEmail())
                 .nickname(attributes.getNickname())
-                .memberRole(MemberRole.MEMBER)
+                .memberRole(Role.MEMBER)
                 .build();
 
         Member byEmail = memberRepository.findByEmail(attributes.getEmail());

@@ -18,7 +18,7 @@ public class PlateController {
     /**
      * Plate 1개 삭제
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public void deletePlate(@RequestParam("mealId") Long mealId,
                             @RequestParam("plateId") Long plateId) {
 

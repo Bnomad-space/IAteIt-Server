@@ -2,7 +2,7 @@ package com.bnomad.IAteIt.util.domain;
 
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
-import com.bnomad.IAteIt.domain.member.entity.MemberRole;
+import com.bnomad.IAteIt.domain.member.entity.Role;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class MemberUtil {
                 .nickname("testMember1")
                 .profileImage("http://aaaa")
                 .email("email")
-                .memberRole(MemberRole.MEMBER)
+                .memberRole(Role.MEMBER)
                 .meals(new ArrayList<>())
                 .blockList(new ArrayList<>())
                 .build();

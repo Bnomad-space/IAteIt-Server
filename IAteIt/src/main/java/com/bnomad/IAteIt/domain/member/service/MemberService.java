@@ -27,8 +27,12 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member findByNickname() {
-        return memberRepository.findByNickname("user1");
+    public Member findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email);
     }
 
     /**
