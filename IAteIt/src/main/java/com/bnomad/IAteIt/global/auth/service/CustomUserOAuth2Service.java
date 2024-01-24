@@ -3,8 +3,10 @@ package com.bnomad.IAteIt.global.auth.service;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.entity.Role;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
-import com.bnomad.IAteIt.domain.member.service.MemberService;
+
 import com.bnomad.IAteIt.global.auth.dto.OAuth2Attributes;
+import com.bnomad.IAteIt.global.auth.provider.JwtProvider;
+import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -16,14 +18,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final MemberRepository memberRepository;
-
-    private final MemberService memberService;
 
     @Override
     // 사용자가 구글 or 애플 로그인으로 요청하면 들어오는 화면
@@ -50,9 +51,9 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(Role.MEMBER.name())),
                 attributes.getAttributes(),
-                attributes.getNameAttributeKey());
+                attributes.getNameAttributeKey()
+        );
     }
-
 
     /**
      *
@@ -66,11 +67,11 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
                 .memberRole(Role.MEMBER)
                 .build();
 
-        Member byEmail = memberRepository.findByEmail(attributes.getEmail());
+        Optional<Member> findMember = memberRepository.findByEmail(attributes.getEmail());
 
-        if (byEmail != null) {
+        if (findMember.isPresent()) {
             System.out.println("기존 멤버, Token Refresh를 하거나 혹은 넘어가거나");
-            return byEmail;
+            return findMember.get();
         } else {
             Member savedMember = memberRepository.save(buildMember);
             System.out.println("새롭게 온 멤버");

@@ -11,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
 import java.util.*;
 
 @Component
@@ -27,7 +26,7 @@ public class JwtProvider {
     @Value("${jwt.refresh.expiration}")
     private int REFRESH_EXPIRATION;
 
-    private Key key;
+    private String AUTHORIZATION = "Authorization";
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -46,9 +45,8 @@ public class JwtProvider {
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + ACCESS_EXPIRATION)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, SECRETKEY)  // 사용할 암호화 알고리즘과
-                // signature 에 들어갈 secret값 세팅
+                .setExpiration(new Date(now.getTime() + ACCESS_EXPIRATION))
+                .signWith(SignatureAlgorithm.HS256, SECRETKEY)  // 사용할 암호화 알고리즘과 signature 에 들어갈 secret값 세팅
                 .compact();
     }
 
@@ -67,9 +65,8 @@ public class JwtProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    // Request의 Header에서 token 값을 가져옴 "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("Authorization");
+        return request.getHeader(AUTHORIZATION);
     }
 
     // 토큰의 유효성 + 만료일자 확인

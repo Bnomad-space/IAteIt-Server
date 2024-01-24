@@ -12,6 +12,7 @@ public enum ResultCode {
      */
     MEMBER_FIND_SUCCESS(200, "MEM001", "멤버 조회에 성공했습니다"),
     MEMBER_EDIT_SUCCESS(200, "MEM002", "멤버 정보 변경에 성공했습니다"),
+    MEMBER_JOIN_SUCCESS(200, "MEM003", "멤버 커스텀 회원가입에 성공했습니다"),
 
     /**
      * Login

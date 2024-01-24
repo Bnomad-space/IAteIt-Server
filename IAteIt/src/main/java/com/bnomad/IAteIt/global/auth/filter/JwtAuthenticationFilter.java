@@ -26,24 +26,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // 헤더에서 JWT 를 받아옵니다.
+        // 헤더에서 JWT 를 추출
         String token = jwtProvider.resolveToken(request);
-        System.out.println("token = " + token);
-        // 유효한 토큰인지 확인합니다.
+
+        // 유효한 토큰인지 확인
         if (token != null && jwtProvider.validateToken(token)) {
             // 토큰이 유효하면 토큰으로부터 유저 정보를 받아옵니다.
             Authentication authentication = jwtProvider.getAuthentication(token);
-            // SecurityContext 에 Authentication 객체를 저장합니다.
+            // SecurityContext 에 Authentication 객체를 저장합니다. -> JwtUtil에서 활용하여 User 객체 접근을 빠르고 쉽게 가능하게 함
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            System.out.println("jwtUtil MEmber = " + jwtUtil.currentMember().getNickname());
-
-
+            System.out.println("jwtUtil Member = " + jwtUtil.currentMember().getNickname());
+            filterChain.doFilter(request, response);
         } else {
-            System.out.println("token = 토큰 값이 없어서 return 되는 중" + token);
+            System.out.println("token = 토큰 값이 없어서 return 되는 중... token = " + token);
         }
-        filterChain.doFilter(request, response);
-
     }
 
 }

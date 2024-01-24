@@ -21,7 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return createUserDetails(memberService.findByEmail(email));
+        return createUserDetails(memberService.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("해당 토큰의 email에 해당하는 멤버가 없습니다.")));
     }
 
     public UserDetails createUserDetails(Member member) {

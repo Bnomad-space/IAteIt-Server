@@ -1,6 +1,7 @@
 package com.bnomad.IAteIt.global.auth;
 
 import com.bnomad.IAteIt.global.auth.filter.JwtAuthenticationFilter;
+import com.bnomad.IAteIt.global.auth.handler.CustomAuthenticationHandler;
 import com.bnomad.IAteIt.global.auth.provider.JwtProvider;
 import com.bnomad.IAteIt.global.auth.service.CustomUserOAuth2Service;
 import com.bnomad.IAteIt.global.util.JwtUtil;
@@ -23,15 +24,23 @@ public class WebSecurityConfig {
     // 스프링 시큐리티 접속 막아주는 것
     // security filter 역할을 해주는 부분임
 
-    // UserDetailService, UserDetail
-
-    // antMatchers : url matcher
-    // mvcMatchers : flexable, antMatcher는 토씨도 틀리면 안됨
-
     private final CustomUserOAuth2Service customUserOAuth2Service;
 
     private final JwtProvider jwtProvider;
     private final JwtUtil jwtUtil;
+
+    /**
+     * oauth2 로그인에 성공하게 되면, successHandler로 동작할 빈을 올려놓음
+     */
+    @Bean
+    public CustomAuthenticationHandler customAuthenticationHandler() {
+        return new CustomAuthenticationHandler(jwtProvider);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
     @Bean
@@ -55,7 +64,6 @@ public class WebSecurityConfig {
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated()
-
                 )
                 .oauth2Login(oauth2 ->
                         // oauth2 인증이 끝나면 잡아가는 포인트
@@ -64,17 +72,16 @@ public class WebSecurityConfig {
                                         userInfoEndpointConfig
                                                 .userService(customUserOAuth2Service)
                                 )
+                                // 성공하면, jwt 발급해주는 역할
+                                .successHandler(customAuthenticationHandler())
                 )
 
-                // UsernamePasswordAuthenticationFileter에 들어가기 전 JwtAuthenticationFilter를 실행하겠다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                // UsernamePasswordAuthenticationFileter에 들어가기 전 JwtAuthenticationFilter를 실행하겠습니다~
+                .addFilterBefore(
+                        new JwtAuthenticationFilter(jwtProvider, jwtUtil), UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }
