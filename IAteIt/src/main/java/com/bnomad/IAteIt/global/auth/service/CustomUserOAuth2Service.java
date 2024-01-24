@@ -1,8 +1,7 @@
-package com.bnomad.IAteIt.global.auth;
+package com.bnomad.IAteIt.global.auth.service;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.entity.Role;
-import com.bnomad.IAteIt.domain.member.entity.Session;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import com.bnomad.IAteIt.domain.member.repository.SessionRepository;
 import com.bnomad.IAteIt.domain.member.service.MemberService;
@@ -28,10 +27,6 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
 
     private final MemberService memberService;
 
-    private final HttpSession httpSession;
-    private final SessionRepository sessionRepository;
-
-
     @Override
     // 사용자가 구글 or 애플 로그인으로 요청하면 들어오는 화면
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -49,8 +44,9 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
 
-//        httpSession.setAttribute("member", userNameAttributeName);
         OAuth2Attributes attributes = OAuth2Attributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
+        // oauth2 로그인 요청한 대상을 저장 or 업데이트 함
         Member member = saveOrUpdate(attributes);
 
         return new DefaultOAuth2User(
@@ -75,20 +71,11 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         Member byEmail = memberRepository.findByEmail(attributes.getEmail());
 
         if (byEmail != null) {
-            // Refresh Token!!!
-            System.out.println("REFRESH TOKEN ACTION TRIGGER");
-            return null;
+            System.out.println("기존 멤버, Token Refresh를 하거나 혹은 넘어가거나");
+            return byEmail;
         } else {
             Member savedMember = memberRepository.save(buildMember);
-            Session session = Session.builder()
-                    .member(savedMember)
-                    .build();
-
-            Session save = sessionRepository.save(session);
-
-            // session의 id로 저장함
-            httpSession.setAttribute("member", save.getId());
-
+            System.out.println("새롭게 온 멤버");
             return savedMember;
         }
     }

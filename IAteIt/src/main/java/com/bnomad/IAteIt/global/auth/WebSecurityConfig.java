@@ -1,8 +1,9 @@
 package com.bnomad.IAteIt.global.auth;
 
-import com.bnomad.IAteIt.domain.member.entity.Role;
 import com.bnomad.IAteIt.global.auth.filter.JwtAuthenticationFilter;
 import com.bnomad.IAteIt.global.auth.provider.JwtProvider;
+import com.bnomad.IAteIt.global.auth.service.CustomUserOAuth2Service;
+import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,7 @@ public class WebSecurityConfig {
     private final CustomUserOAuth2Service customUserOAuth2Service;
 
     private final JwtProvider jwtProvider;
+    private final JwtUtil jwtUtil;
 
 
     @Bean
@@ -65,7 +67,7 @@ public class WebSecurityConfig {
                 )
 
                 // UsernamePasswordAuthenticationFileter에 들어가기 전 JwtAuthenticationFilter를 실행하겠다.
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

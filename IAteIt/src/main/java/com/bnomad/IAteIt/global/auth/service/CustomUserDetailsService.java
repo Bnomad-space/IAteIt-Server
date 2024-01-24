@@ -1,4 +1,4 @@
-package com.bnomad.IAteIt.global.auth;
+package com.bnomad.IAteIt.global.auth.service;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.service.MemberService;
@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Collections;
 
 @RequiredArgsConstructor
 @Service
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberService memberService;
 

@@ -1,5 +1,5 @@
 package com.bnomad.IAteIt.global.auth.provider;
-import com.bnomad.IAteIt.global.auth.UserDetailsService;
+import com.bnomad.IAteIt.global.auth.service.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class JwtProvider {
 
     private Key key;
 
-    private final UserDetailsService userDetailService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @PostConstruct
     protected void init() {
@@ -56,7 +56,7 @@ public class JwtProvider {
     public Authentication getAuthentication(String token) {
         String email = Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(token).getBody().getSubject();
         // 해당 구현을 Username으로 하지 않고, 멤버의 email로 구현함
-        UserDetails userDetails = userDetailService.loadUserByUsername(email);
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
         System.out.println("email = " + email); // email
         System.out.println("userDetails = " + userDetails.getPassword()); // email
         for (GrantedAuthority authority : userDetails.getAuthorities()) {

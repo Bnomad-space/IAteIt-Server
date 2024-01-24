@@ -1,6 +1,7 @@
 package com.bnomad.IAteIt.global.auth.filter;
 
 import com.bnomad.IAteIt.global.auth.provider.JwtProvider;
+import com.bnomad.IAteIt.global.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
 
+    private final JwtUtil jwtUtil;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -33,9 +36,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // SecurityContext 에 Authentication 객체를 저장합니다.
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
+            System.out.println("jwtUtil MEmber = " + jwtUtil.currentMember().getNickname());
+
 
         } else {
-            System.out.println("token = 토큰 값이 어서 return 되는 중" + token);
+            System.out.println("token = 토큰 값이 없어서 return 되는 중" + token);
         }
         filterChain.doFilter(request, response);
 
