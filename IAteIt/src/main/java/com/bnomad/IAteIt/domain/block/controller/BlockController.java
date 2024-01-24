@@ -4,7 +4,6 @@ import com.bnomad.IAteIt.domain.block.entity.dto.BlockedMemberResponse;
 import com.bnomad.IAteIt.domain.block.entity.dto.BlockingMemberRequest;
 import com.bnomad.IAteIt.domain.block.service.BlockService;
 import com.bnomad.IAteIt.global.result.ResultResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ import static com.bnomad.IAteIt.global.result.ResultCode.BLOCK_MEMBER_SUCCESS;
 public class BlockController {
 
     private final BlockService blockService;
-    private final HttpSession httpSession;
 
     /**
      * 멤버 차단
@@ -28,17 +26,17 @@ public class BlockController {
     @PostMapping("")
     public ResponseEntity<ResultResponse> blockMember(@RequestBody BlockingMemberRequest blockingMemberRequest) {
         blockService.blockMember(blockingMemberRequest);
+
         return ResponseEntity.ok(ResultResponse.of(BLOCK_MEMBER_SUCCESS));
     }
 
     /**
      * 멤버 차단 목록 확인
-     * httpSession으로부터 멤버 정보를 가져옴
      */
     @GetMapping("")
     public ResponseEntity<ResultResponse> blockedMemberList(@RequestParam("memberId") Long memberId) {
-        System.out.println("memberId = " + memberId);
         List<BlockedMemberResponse> blockedMemberList = blockService.blockedMemberList(memberId);
+
         return ResponseEntity.ok(ResultResponse.of(BLOCKED_MEMBER_FIND_SUCCESS, blockedMemberList));
     }
 
