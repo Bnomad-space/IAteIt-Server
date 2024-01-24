@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import static com.bnomad.IAteIt.global.result.ResultCode.*;
 
 @RestController
-@RequestMapping("/api/public/login")
+@RequestMapping("/api/v1/join")
 @RequiredArgsConstructor
 public class LoginController {
 
@@ -21,11 +21,7 @@ public class LoginController {
     @PostMapping("")
     public ResponseEntity<ResultResponse> join(@RequestBody JoinRequestDto request) {
         loginService.joinMember(request);
-        return ResponseEntity.ok(
-                ResultResponse.of(
-                        MEMBER_JOIN_SUCCESS
-                )
-        );
+        return ResponseEntity.ok(ResultResponse.of(MEMBER_JOIN_SUCCESS));
     }
 
 }

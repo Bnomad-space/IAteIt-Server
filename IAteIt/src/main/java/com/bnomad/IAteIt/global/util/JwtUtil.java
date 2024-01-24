@@ -1,9 +1,7 @@
 package com.bnomad.IAteIt.global.util;
 
-import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,12 +13,10 @@ public class JwtUtil {
 
     private final MemberRepository memberRepository;
 
-    public Member currentMember() {
+    public Long currentMemberId() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
-        Member currentMember = memberRepository.findById(Long.parseLong(authentication.getName()))
-                .orElseThrow(() -> new RuntimeException("해당 id의 멤버가 없습니다."));
-        return currentMember;
+        return Long.parseLong(authentication.getName());
     }
 
 }

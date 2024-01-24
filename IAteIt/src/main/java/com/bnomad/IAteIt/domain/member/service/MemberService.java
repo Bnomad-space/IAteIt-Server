@@ -2,7 +2,9 @@ package com.bnomad.IAteIt.domain.member.service;
 
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.entity.dto.MemberEditRequest;
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberProfileDto;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
+import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final JwtUtil jwtUtil;
 
 
     public HashMap<String, String> join() {
@@ -28,6 +31,13 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findByNickname(String nickname) {
         return memberRepository.findByNickname(nickname);
+    }
+
+    public MemberProfileDto findById() {
+        Long memberId = jwtUtil.currentMemberId();
+        Member findMember = memberRepository.findById(memberId)
+                .orElseThrow();
+        return new MemberProfileDto(findMember);
     }
 
     public Optional<Member> findByEmail(String email) {

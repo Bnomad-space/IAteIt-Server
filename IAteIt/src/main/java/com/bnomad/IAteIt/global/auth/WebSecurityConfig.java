@@ -60,8 +60,8 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(auth ->
                                 auth
-                                        .requestMatchers(HttpMethod.POST, "/api/public/**")
-                                        .permitAll()
+//                                        .requestMatchers(HttpMethod.POST, "/api/public/**")
+//                                        .permitAll()
                                         .anyRequest()
                                         .authenticated()
                 )

@@ -1,7 +1,7 @@
 package com.bnomad.IAteIt.domain.member.controller;
 
-import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.entity.dto.MemberEditRequest;
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberProfileDto;
 import com.bnomad.IAteIt.domain.member.service.MemberService;
 import com.bnomad.IAteIt.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +19,20 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * 멤버 정보 가져오기
+     */
+    @GetMapping("")
+    public ResponseEntity<ResultResponse> memberProfile() {
+        MemberProfileDto findMember = memberService.findById();
+        return ResponseEntity.ok(ResultResponse.of(MEMBER_FIND_SUCCESS, findMember));
+    }
+
     @PostMapping("")
     public ResponseEntity<HashMap<String, String>> join() {
         HashMap<String, String> accessAndrefreshToken = new HashMap<String, String>();
         accessAndrefreshToken = memberService.join();
         return ResponseEntity.ok(accessAndrefreshToken);
-    }
-
-    @GetMapping("/profile")
-    public ResponseEntity<ResultResponse> memberProfile() {
-        Member byNickname = memberService.findByNickname("");
-        return ResponseEntity.ok(ResultResponse.of(MEMBER_FIND_SUCCESS, byNickname));
     }
 
     /**
@@ -40,7 +43,5 @@ public class MemberController {
         memberService.editProfile(memberEditRequest);
         return ResponseEntity.ok(ResultResponse.of(MEMBER_EDIT_SUCCESS));
     }
-
-
 
 }

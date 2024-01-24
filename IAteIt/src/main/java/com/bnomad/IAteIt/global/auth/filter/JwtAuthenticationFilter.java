@@ -36,11 +36,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // SecurityContext 에 Authentication 객체를 저장합니다. -> JwtUtil에서 활용하여 User 객체 접근을 빠르고 쉽게 가능하게 함
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            System.out.println("jwtUtil Member = " + jwtUtil.currentMember().getNickname());
-            filterChain.doFilter(request, response);
+            System.out.println("jwtUtil Member = " + jwtUtil.currentMemberId());
+
         } else {
             System.out.println("token = 토큰 값이 없어서 return 되는 중... token = " + token);
         }
+        filterChain.doFilter(request, response);
     }
 
 }

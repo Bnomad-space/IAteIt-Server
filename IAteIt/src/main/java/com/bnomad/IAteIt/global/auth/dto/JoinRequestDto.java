@@ -5,8 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 public class JoinRequestDto {
-
-    private Long id;
     private String nickname;
     private MultipartFile image;
 }

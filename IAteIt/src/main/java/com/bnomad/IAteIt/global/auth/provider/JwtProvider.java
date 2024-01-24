@@ -53,6 +53,7 @@ public class JwtProvider {
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         String email = Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(token).getBody().getSubject();
+
         // 해당 구현을 Username으로 하지 않고, 멤버의 email로 구현함
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
         System.out.println("email = " + email); // email
