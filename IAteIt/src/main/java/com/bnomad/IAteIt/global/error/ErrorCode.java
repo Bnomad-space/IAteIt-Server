@@ -7,7 +7,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    LOGIN_MEMBER_ERROR(400, "LM001", "로그인된 멤버가 없습니다");
+    /**
+     * MEMBER
+     */
+    MEMBER_NOT_FOUND(400, "MEM001", "해당 멤버를 조회할 수 없습니다");
+
 
 
     private final int status;

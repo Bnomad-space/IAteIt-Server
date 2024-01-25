@@ -5,8 +5,6 @@ import com.bnomad.IAteIt.domain.member.entity.Role;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 
 import com.bnomad.IAteIt.global.auth.dto.OAuth2Attributes;
-import com.bnomad.IAteIt.global.auth.provider.JwtProvider;
-import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

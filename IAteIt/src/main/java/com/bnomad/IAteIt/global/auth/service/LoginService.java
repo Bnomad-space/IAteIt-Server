@@ -3,11 +3,14 @@ package com.bnomad.IAteIt.global.auth.service;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.auth.dto.JoinRequestDto;
 import com.bnomad.IAteIt.global.auth.repository.LoginRepository;
+import com.bnomad.IAteIt.global.error.BusinessException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 
 @Service
@@ -22,7 +25,7 @@ public class LoginService {
     public Member joinMember(JoinRequestDto request) {
         Long memberId = jwtUtil.currentMemberId();
         Member findMember = loginRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("{#function: joinMember} 해당 id의 멤버가 없습니다. 다시 로그인해주세요"));
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
 
         findMember.join(request);
         return findMember;

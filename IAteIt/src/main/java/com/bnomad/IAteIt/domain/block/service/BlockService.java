@@ -6,6 +6,8 @@ import com.bnomad.IAteIt.domain.block.entity.dto.BlockingMemberRequest;
 import com.bnomad.IAteIt.domain.block.repository.BlockRepository;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
+import com.bnomad.IAteIt.global.error.BusinessException;
+import com.bnomad.IAteIt.global.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,7 @@ public class BlockService {
         Member blockingMember = memberRepository.findById(blockingMemberRequest.getBlockingMemberId())
                 .orElseThrow(() -> new RuntimeException("blocking 멤버 id가 없습니다."));
         Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
-                .orElseThrow(() -> new RuntimeException("blocked 멤버 id가 없습니다"));
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
 
         List<Block> allByBlockingMemberId = blockRepository.findAllByBlockingMemberId(blockingMember.getId());
         if ((allByBlockingMemberId.stream().filter(a -> (a.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
