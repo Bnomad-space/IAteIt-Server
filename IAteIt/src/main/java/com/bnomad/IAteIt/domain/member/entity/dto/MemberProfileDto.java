@@ -8,6 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MemberProfileDto {
 
+    private Long id;
     private String nickname;
     private String profileImageUrl;
 
@@ -15,6 +16,7 @@ public class MemberProfileDto {
     }
 
     public MemberProfileDto(Member member) {
+        this.id = member.getId();
         this.nickname = member.getNickname();
         this.profileImageUrl = member.getProfileImage();
     }

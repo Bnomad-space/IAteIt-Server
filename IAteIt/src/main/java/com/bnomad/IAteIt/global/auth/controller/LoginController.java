@@ -1,5 +1,6 @@
 package com.bnomad.IAteIt.global.auth.controller;
 
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberProfileDto;
 import com.bnomad.IAteIt.global.auth.dto.JoinRequestDto;
 import com.bnomad.IAteIt.global.auth.service.LoginService;
 import com.bnomad.IAteIt.global.result.ResultResponse;
@@ -26,8 +27,8 @@ public class LoginController {
      */
     @PostMapping("")
     public ResponseEntity<ResultResponse> join(@ModelAttribute JoinRequestDto joinRequestDto) {
-        loginService.joinMember(joinRequestDto);
-        return ResponseEntity.ok(ResultResponse.of(MEMBER_JOIN_SUCCESS));
+        MemberProfileDto memberProfileDto = loginService.joinMember(joinRequestDto);
+        return ResponseEntity.ok(ResultResponse.of(MEMBER_JOIN_SUCCESS, memberProfileDto));
     }
 
 }
