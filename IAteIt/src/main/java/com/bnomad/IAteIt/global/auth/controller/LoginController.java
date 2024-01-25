@@ -17,7 +17,10 @@ public class LoginController {
     private final LoginService loginService;
 
 
-    // TODO: return 해줘야 하는 것이 accessToken과 refreshToken이다.
+    /**
+     * oauth2: accessToken을 헤더에 포함해 리턴
+     * accessToken을 활용해 -> 닉네임, 프로필이미지 -> 서비스회원가입
+     */
     @PostMapping("")
     public ResponseEntity<ResultResponse> join(@RequestBody JoinRequestDto request) {
         loginService.joinMember(request);
