@@ -46,8 +46,9 @@ public class Member extends BaseEntity {
         this.profileImage = request.getProfileImage();
     }
 
-    public void join(JoinRequestDto requestDto) {
+    public void join(JoinRequestDto requestDto, String url) {
         this.nickname = requestDto.getNickname();
+        this.profileImage = url;
     }
 
     public void block_Member(Member blockedMember) {
