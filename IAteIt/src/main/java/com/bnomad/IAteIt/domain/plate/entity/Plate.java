@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
+
 @Entity
 public class Plate extends BaseEntity {
 
@@ -22,4 +22,11 @@ public class Plate extends BaseEntity {
 
     private String imageUrl;
 
+    public Plate() {
+    }
+
+    public Plate(Meal meal, String url) {
+        this.meal = meal;
+        this.imageUrl = url;
+    }
 }

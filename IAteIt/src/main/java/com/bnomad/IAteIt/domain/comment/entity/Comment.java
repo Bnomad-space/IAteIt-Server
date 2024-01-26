@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 @Entity
 public class Comment extends BaseEntity {
@@ -31,4 +30,6 @@ public class Comment extends BaseEntity {
 
     private String content;
 
+    public Comment() {
+    }
 }
