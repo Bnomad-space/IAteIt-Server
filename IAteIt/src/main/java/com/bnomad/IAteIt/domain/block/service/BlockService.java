@@ -8,6 +8,7 @@ import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import com.bnomad.IAteIt.global.error.BusinessException;
 import com.bnomad.IAteIt.global.error.ErrorCode;
+import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,11 @@ import java.util.List;
 @Service
 public class BlockService {
 
+    private final JwtUtil jwtUtil;
     private final BlockRepository blockRepository;
     private final MemberRepository memberRepository;
 
-    public void blockMember(BlockingMemberRequest blockingMemberRequest) {
+    public void block(BlockingMemberRequest blockingMemberRequest) {
         Member blockingMember = memberRepository.findById(blockingMemberRequest.getBlockingMemberId())
                 .orElseThrow(() -> new RuntimeException("blocking 멤버 id가 없습니다."));
         Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
@@ -41,14 +43,22 @@ public class BlockService {
                 .build();
         blockRepository.save(block);
     }
-    public List<BlockedMemberResponse> blockedMemberList(Long memberId) {
-        Member findMember = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("유효한 멤버 id가 아닙니다."));
-        List<Block> blockedMemberList = blockRepository.findAllByBlockingMemberId(findMember.getId());
-        ArrayList<BlockedMemberResponse> temp = new ArrayList<>();
+
+    public List<BlockedMemberResponse> blockedMemberList() {
+        Long currentMemberId = jwtUtil.currentMemberId();
+
+        List<Block> blockedMemberList = blockRepository.findAllByBlockingMemberId(currentMemberId);
+        ArrayList<BlockedMemberResponse> blockedMemberResponses = new ArrayList<>();
         for (Block block : blockedMemberList) {
-            temp.add(new BlockedMemberResponse(block.getBlockedMember()));
+            blockedMemberResponses.add(new BlockedMemberResponse(block.getBlockedMember()));
         }
-        return temp;
+        return blockedMemberResponses;
+    }
+
+    public void unblock(Long blockedMemberId) {
+        Long currentMemberId = jwtUtil.currentMemberId();
+        Block block = blockRepository.findByBlockingMemberIdAndBlockedMemberId(currentMemberId, blockedMemberId);
+
+        blockRepository.delete(block);
     }
 }

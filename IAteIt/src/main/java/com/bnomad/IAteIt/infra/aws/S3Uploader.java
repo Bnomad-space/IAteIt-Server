@@ -1,8 +1,9 @@
 package com.bnomad.IAteIt.infra.aws;
 
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.UploadPartRequest;
-import com.amazonaws.services.s3.model.UploadPartResult;
+import com.amazonaws.services.s3.model.*;
+import com.bnomad.IAteIt.global.util.ImageUtil;
+import com.bnomad.IAteIt.global.vo.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,10 +22,32 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String imageUpload(MultipartFile file, String fileName) {
-        amazonS3Client.putObject(bucket, fileName, convertMultipartFileToLocalFile(file));
-        return amazonS3Client.getUrl(bucket, fileName).toString();
+    public String imageUpload(MultipartFile multipartFile, String dir) {
+        Image image = ImageUtil.multipartToImage(multipartFile, dir);
+        File uploadFile = convertMultipartFileToLocalFile(multipartFile);
+        amazonS3Client.putObject(
+                new PutObjectRequest(
+                        bucket,
+                        image.filePath(),
+                        uploadFile
+                )
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        String url = amazonS3Client.getUrl(bucket, image.filePath()).toString();
 
+        deleteLocalFile(uploadFile);
+        return url;
+    }
+
+    public void deleteImage(String url) {
+        String filepath = url.split("/")[3];
+        amazonS3Client.deleteObject(bucket, filepath);
+    }
+
+    private void deleteLocalFile(File file) {
+        if (file.delete()) {
+            return;
+        }
+        System.out.println("file = " + file);
     }
 
     private File convertMultipartFileToLocalFile(MultipartFile file) {

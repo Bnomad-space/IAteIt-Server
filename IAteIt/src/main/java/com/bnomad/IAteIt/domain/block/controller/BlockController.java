@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.bnomad.IAteIt.global.result.ResultCode.BLOCKED_MEMBER_FIND_SUCCESS;
-import static com.bnomad.IAteIt.global.result.ResultCode.BLOCK_MEMBER_SUCCESS;
+import static com.bnomad.IAteIt.global.result.ResultCode.*;
 
 @RestController
 @RequestMapping("/api/v1/block")
@@ -21,23 +20,32 @@ public class BlockController {
     private final BlockService blockService;
 
     /**
+     * 멤버 차단 목록 확인
+     */
+    @GetMapping("")
+    public ResponseEntity<ResultResponse> blockedMemberList() {
+        List<BlockedMemberResponse> blockedMemberList = blockService.blockedMemberList();
+        return ResponseEntity.ok(ResultResponse.of(BLOCKED_MEMBER_FIND_SUCCESS, blockedMemberList));
+    }
+
+    /**
      * 멤버 차단
      */
     @PostMapping("")
     public ResponseEntity<ResultResponse> blockMember(@RequestBody BlockingMemberRequest blockingMemberRequest) {
-        blockService.blockMember(blockingMemberRequest);
+        blockService.block(blockingMemberRequest);
 
         return ResponseEntity.ok(ResultResponse.of(BLOCK_MEMBER_SUCCESS));
     }
 
     /**
-     * 멤버 차단 목록 확인
+     * 멤버 차단 해제
      */
-    @GetMapping("")
-    public ResponseEntity<ResultResponse> blockedMemberList(@RequestParam("memberId") Long memberId) {
-        List<BlockedMemberResponse> blockedMemberList = blockService.blockedMemberList(memberId);
+    @DeleteMapping("")
+    public ResponseEntity<ResultResponse> unblock(@RequestParam("blockedMemberId") Long blockedMemberId) {
+        blockService.unblock(blockedMemberId);
 
-        return ResponseEntity.ok(ResultResponse.of(BLOCKED_MEMBER_FIND_SUCCESS, blockedMemberList));
+        return ResponseEntity.ok(ResultResponse.of(UNBLOCK_MEMBER_SUCCESS));
     }
 
 }

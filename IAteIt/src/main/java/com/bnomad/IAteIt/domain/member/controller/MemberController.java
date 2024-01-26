@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 import static com.bnomad.IAteIt.global.result.ResultCode.*;
 
 @RestController
@@ -28,18 +26,11 @@ public class MemberController {
         return ResponseEntity.ok(ResultResponse.of(MEMBER_FIND_SUCCESS, findMember));
     }
 
-    @PostMapping("")
-    public ResponseEntity<HashMap<String, String>> join() {
-        HashMap<String, String> accessAndrefreshToken = new HashMap<String, String>();
-        accessAndrefreshToken = memberService.join();
-        return ResponseEntity.ok(accessAndrefreshToken);
-    }
-
     /**
      * 멤버 닉네임 수정
      */
-    @PutMapping("/edit")
-    public ResponseEntity<ResultResponse> memberNicknameModify(@RequestBody MemberEditRequest memberEditRequest) {
+    @PutMapping("")
+    public ResponseEntity<ResultResponse> memberNicknameModify(@ModelAttribute MemberEditRequest memberEditRequest) {
         memberService.editProfile(memberEditRequest);
         return ResponseEntity.ok(ResultResponse.of(MEMBER_EDIT_SUCCESS));
     }

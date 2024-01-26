@@ -41,9 +41,11 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "blockingMember")
     private List<Block> blockList = new ArrayList<>();
 
-    public void editProfile(MemberEditRequest request) {
-        this.nickname = request.getNickname();
-        this.profileImage = request.getProfileImage();
+    public void edit(String nickname, String profileImage) {
+        this.nickname = nickname;
+        if (profileImage != "") {
+            this.profileImage = profileImage;
+        }
     }
 
     public void join(JoinRequestDto requestDto, String url) {

@@ -31,7 +31,8 @@ public enum ResultCode {
      */
 
     BLOCK_MEMBER_SUCCESS(200, "B001", "멤버 차단에 성공했습니다"),
-    BLOCKED_MEMBER_FIND_SUCCESS(200, "B002", "차단한 멤버 조회에 성공했습니다.")
+    BLOCKED_MEMBER_FIND_SUCCESS(200, "B002", "차단한 멤버 조회에 성공했습니다."),
+    UNBLOCK_MEMBER_SUCCESS(200, "B003", "멤버 차단 해제에 성공했습니다")
     ;
 
 
