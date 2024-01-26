@@ -8,17 +8,17 @@ import lombok.Getter;
 public enum ResultCode {
 
     /**
+     * Login
+     */
+
+    LOGIN_MEMBER_FIND_SUCCESS(200, "LM001", "로그인된 멤버 조회에 성공했습니다"),
+
+    /**
      * Member
      */
     MEMBER_FIND_SUCCESS(200, "MEM001", "멤버 조회에 성공했습니다"),
     MEMBER_EDIT_SUCCESS(200, "MEM002", "멤버 정보 변경에 성공했습니다"),
     MEMBER_JOIN_SUCCESS(200, "MEM003", "멤버 커스텀 회원가입에 성공했습니다"),
-
-    /**
-     * Login
-     */
-
-    LOGIN_MEMBER_FIND_SUCCESS(200, "LM001", "로그인된 멤버 조회에 성공했습니다"),
 
     /**
      * Meal
@@ -34,6 +34,14 @@ public enum ResultCode {
 
     PLATE_ADD_SUCCESS(200, "P001", "Plate 추가에 성공했습니다"),
     PLATE_DELETE_SUCCESS(200, "P002", "Plate 삭제에 성공했습니다"),
+
+    /**
+     * Comment
+     */
+    COMMENT_FIND_BY_MEAL_SUCCESS(200, "C001", "Comment 조회에 성공했습니다"),
+    COMMENT_CREATE_SUCCESS(200, "C002", "Comment 생성에 성공했습니다"),
+    COMMENT_EDIT_SUCCESS(200, "C003", "Comment 변경에 성공했습니다"),
+    COMMENT_DELETE_SUCCESS(200, "C004", "Comment 삭제에 성공했습니다"),
 
     /**
      * Block

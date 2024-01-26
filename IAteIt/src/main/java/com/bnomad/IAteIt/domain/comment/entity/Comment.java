@@ -1,5 +1,7 @@
 package com.bnomad.IAteIt.domain.comment.entity;
 
+import com.bnomad.IAteIt.domain.comment.entity.dto.CommentCreateDto;
+import com.bnomad.IAteIt.domain.comment.entity.dto.CommentEditDto;
 import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
@@ -22,14 +24,25 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member from_member;
+    private Member fromMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_member_id")
-    private Member to_member;
+    private Member toMember;
 
     private String content;
 
     public Comment() {
+    }
+
+    public Comment(Member member, Meal meal, CommentCreateDto commentCreateDto) {
+        this.fromMember = member;
+        this.meal = meal;
+        this.content = commentCreateDto.getContent();
+    }
+
+    public void edit(CommentEditDto commentEditDto) {
+        this.content = commentEditDto.getContent();
+
     }
 }
