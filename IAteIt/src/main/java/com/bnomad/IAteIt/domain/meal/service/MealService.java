@@ -2,6 +2,7 @@ package com.bnomad.IAteIt.domain.meal.service;
 
 import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.meal.entity.dto.MealCreateDto;
+import com.bnomad.IAteIt.domain.meal.entity.dto.MealEditDto;
 import com.bnomad.IAteIt.domain.meal.repository.MealRepository;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
@@ -13,6 +14,8 @@ import com.bnomad.IAteIt.infra.aws.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -50,6 +53,13 @@ public class MealService {
         Meal savedMeal = mealRepository.save(meal);
 
         plateService.createPlate(savedMeal, url);
+    }
+
+    public void editMeal(MealEditDto mealEditDto) {
+        Meal findMeal = mealRepository.findById(mealEditDto.getMealId())
+                .orElseThrow(() -> new RuntimeException());
+
+        findMeal.edit(mealEditDto);
     }
 
 

@@ -1,6 +1,7 @@
 package com.bnomad.IAteIt.domain.meal.entity;
 
 import com.bnomad.IAteIt.domain.meal.entity.dto.MealCreateDto;
+import com.bnomad.IAteIt.domain.meal.entity.dto.MealEditDto;
 import com.bnomad.IAteIt.domain.plate.entity.Plate;
 import com.bnomad.IAteIt.domain.comment.entity.Comment;
 import com.bnomad.IAteIt.domain.member.entity.Member;
@@ -44,6 +45,12 @@ public class Meal extends BaseEntity {
         this.location = mealCreateDto.getLocation();
         this.member = member;
     }
+
+    public void edit(MealEditDto mealEditDto) {
+        this.caption = mealEditDto.getCaption();
+        this.location = mealEditDto.getLocation();
+    }
+
 
     public void captionChange(String newCaption) {
         this.caption = newCaption;

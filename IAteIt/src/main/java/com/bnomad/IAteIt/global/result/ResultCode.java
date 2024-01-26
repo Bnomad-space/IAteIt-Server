@@ -24,14 +24,15 @@ public enum ResultCode {
      * Meal
      */
 
-    MEAL_CREATE_SUCCESS(200, "ML001", "Meal 생성에 성공했습니다."),
+    MEAL_CREATE_SUCCESS(200, "ML001", "Meal 생성에 성공했습니다"),
+    MEAL_EDIT_SUCCESS(200, "ML002", "Meal 수정에 성공했습니다"),
 
     /**
      * Block
      */
 
     BLOCK_MEMBER_SUCCESS(200, "B001", "멤버 차단에 성공했습니다"),
-    BLOCKED_MEMBER_FIND_SUCCESS(200, "B002", "차단한 멤버 조회에 성공했습니다."),
+    BLOCKED_MEMBER_FIND_SUCCESS(200, "B002", "차단한 멤버 조회에 성공했습니다"),
     UNBLOCK_MEMBER_SUCCESS(200, "B003", "멤버 차단 해제에 성공했습니다")
     ;
 

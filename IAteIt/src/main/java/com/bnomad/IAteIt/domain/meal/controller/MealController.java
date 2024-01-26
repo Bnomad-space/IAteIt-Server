@@ -2,14 +2,12 @@ package com.bnomad.IAteIt.domain.meal.controller;
 
 
 import com.bnomad.IAteIt.domain.meal.entity.dto.MealCreateDto;
+import com.bnomad.IAteIt.domain.meal.entity.dto.MealEditDto;
 import com.bnomad.IAteIt.domain.meal.service.MealService;
 import com.bnomad.IAteIt.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.bnomad.IAteIt.global.result.ResultCode.*;
 
@@ -20,12 +18,27 @@ public class MealController {
 
     private final MealService mealService;
 
+
+    /**
+     * Meal 생성
+     */
     @PostMapping("")
     public ResponseEntity<ResultResponse> createMeal(@ModelAttribute MealCreateDto mealCreateDto) {
         mealService.createMeal(mealCreateDto);
 
-        return ResponseEntity.ok(ResultResponse.of(MEAL_CREATE_SUCCESS, "sdf"));
+        return ResponseEntity.ok(ResultResponse.of(MEAL_CREATE_SUCCESS));
     }
+
+    /**
+     * Meal 수정
+     */
+    @PutMapping("")
+    public ResponseEntity<ResultResponse> editMeal(@RequestBody MealEditDto mealEditDto) {
+        mealService.editMeal(mealEditDto);
+
+        return ResponseEntity.ok(ResultResponse.of(MEAL_EDIT_SUCCESS));
+    }
+
 
 
 }

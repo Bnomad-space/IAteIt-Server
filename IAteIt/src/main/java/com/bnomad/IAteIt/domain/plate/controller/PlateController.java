@@ -14,6 +14,8 @@ public class PlateController {
 
     private final PlateService plateService;
 
+    
+
 
     /**
      * Plate 1개 삭제
