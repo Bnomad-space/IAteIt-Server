@@ -33,9 +33,8 @@ public class BlockController {
      */
     @PostMapping("")
     public ResponseEntity<ResultResponse> blockMember(@RequestBody BlockingMemberRequest blockingMemberRequest) {
-        blockService.block(blockingMemberRequest);
-
-        return ResponseEntity.ok(ResultResponse.of(BLOCK_MEMBER_SUCCESS));
+        BlockedMemberResponse blockedMemberResponse = blockService.block(blockingMemberRequest);
+        return ResponseEntity.ok(ResultResponse.of(BLOCK_MEMBER_SUCCESS, blockedMemberResponse));
     }
 
     /**
@@ -44,7 +43,6 @@ public class BlockController {
     @DeleteMapping("")
     public ResponseEntity<ResultResponse> unblock(@RequestParam("blockedMemberId") Long blockedMemberId) {
         blockService.unblock(blockedMemberId);
-
         return ResponseEntity.ok(ResultResponse.of(UNBLOCK_MEMBER_SUCCESS));
     }
 

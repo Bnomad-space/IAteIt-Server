@@ -21,28 +21,17 @@ import java.util.List;
 @Service
 public class BlockService {
 
+    /**
+     * util
+     */
     private final JwtUtil jwtUtil;
+
+    /**
+     * Repository
+     */
     private final BlockRepository blockRepository;
     private final MemberRepository memberRepository;
 
-    public void block(BlockingMemberRequest blockingMemberRequest) {
-        Member blockingMember = memberRepository.findById(blockingMemberRequest.getBlockingMemberId())
-                .orElseThrow(() -> new RuntimeException("blocking 멤버 id가 없습니다."));
-        Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
-
-        List<Block> allByBlockingMemberId = blockRepository.findAllByBlockingMemberId(blockingMember.getId());
-        if ((allByBlockingMemberId.stream().filter(a -> (a.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
-            System.out.println("이미 저장되어 있음");
-            return;
-        }
-
-        Block block = Block.builder()
-                .blockingMember(blockingMember)
-                .blockedMember(blockedMember)
-                .build();
-        blockRepository.save(block);
-    }
 
     public List<BlockedMemberResponse> blockedMemberList() {
         Long currentMemberId = jwtUtil.currentMemberId();
@@ -50,9 +39,29 @@ public class BlockService {
         List<Block> blockedMemberList = blockRepository.findAllByBlockingMemberId(currentMemberId);
         ArrayList<BlockedMemberResponse> blockedMemberResponses = new ArrayList<>();
         for (Block block : blockedMemberList) {
-            blockedMemberResponses.add(new BlockedMemberResponse(block.getBlockedMember()));
+            blockedMemberResponses.add(new BlockedMemberResponse(block));
         }
         return blockedMemberResponses;
+    }
+
+    public BlockedMemberResponse block(BlockingMemberRequest blockingMemberRequest) {
+        Long currentMemberId = jwtUtil.currentMemberId();
+        Member blockingMember = memberRepository.findById(currentMemberId)
+                .orElseThrow(() -> new RuntimeException());
+        Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+
+        List<Block> allByBlockingMemberId = blockRepository.findAllByBlockingMemberId(blockingMember.getId());
+        if ((allByBlockingMemberId.stream().filter(a -> (a.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
+            throw new RuntimeException("이미 저장되어 있음");
+        }
+
+        Block block = Block.builder()
+                .blockingMember(blockingMember)
+                .blockedMember(blockedMember)
+                .build();
+        blockRepository.save(block);
+        return new BlockedMemberResponse(block);
     }
 
     public void unblock(Long blockedMemberId) {

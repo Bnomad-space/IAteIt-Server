@@ -6,7 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BlockingMemberRequest {
-
-    private Long blockingMemberId;
     private Long blockedMemberId;
 }
