@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -48,6 +49,19 @@ public class PlateService {
     public void deleteAllByMealId(Long mealId) {
         List<Plate> plates = plateRepository.findAllByMealId(mealId);
         plateRepository.deleteAll(plates);
+    }
+
+    public void deletePlate(Long plateId) {
+        Plate plate = plateRepository.findById(plateId)
+                .orElseThrow(() -> new RuntimeException());
+        List<Plate> plates = plateRepository.findAllByMealId(plate.getMeal().getId());
+        if (plates.size() == 1) {
+            Meal meal = mealRepository.findById(plate.getMeal().getId())
+                    .orElseThrow(() -> new RuntimeException());
+            mealRepository.delete(meal);
+        }
+        s3Uploader.deleteImage(plate.getImageUrl());
+        plateRepository.delete(plate);
     }
 
 }

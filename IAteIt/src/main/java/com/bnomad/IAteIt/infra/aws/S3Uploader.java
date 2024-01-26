@@ -39,7 +39,12 @@ public class S3Uploader {
     }
 
     public void deleteImage(String url) {
-        String filepath = url.split("/")[3];
+        String dir = url.split("/")[3];
+        String fileName = url.split("/")[4];
+
+        String filepath = dir + "/" + fileName;
+        System.out.println("url = " + url);
+        System.out.println("filepath = " + filepath);
         amazonS3Client.deleteObject(bucket, filepath);
     }
 

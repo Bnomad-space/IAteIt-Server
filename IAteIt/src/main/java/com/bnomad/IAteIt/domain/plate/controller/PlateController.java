@@ -27,12 +27,12 @@ public class PlateController {
     }
 
     /**
-     * Plate 1개 삭제
+     * Plate 삭제
      */
     @DeleteMapping("")
-    public void deletePlate(@RequestParam("mealId") Long mealId,
-                            @RequestParam("plateId") Long plateId) {
-
+    public ResponseEntity<ResultResponse> deletePlate(@RequestParam("plateId") Long plateId) {
+        plateService.deletePlate(plateId);
+        return ResponseEntity.ok(ResultResponse.of(PLATE_DELETE_SUCCESS));
     }
 
 

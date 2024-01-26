@@ -33,6 +33,7 @@ public enum ResultCode {
      */
 
     PLATE_ADD_SUCCESS(200, "P001", "Plate 추가에 성공했습니다"),
+    PLATE_DELETE_SUCCESS(200, "P002", "Plate 삭제에 성공했습니다"),
 
     /**
      * Block
