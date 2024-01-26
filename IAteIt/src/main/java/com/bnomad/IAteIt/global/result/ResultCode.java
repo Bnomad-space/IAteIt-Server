@@ -26,6 +26,7 @@ public enum ResultCode {
 
     MEAL_CREATE_SUCCESS(200, "ML001", "Meal 생성에 성공했습니다"),
     MEAL_EDIT_SUCCESS(200, "ML002", "Meal 수정에 성공했습니다"),
+    MEAL_DELETE_SUCCESS(200, "ML003", "Meal 삭제에 성공했습니다"),
 
     /**
      * Block

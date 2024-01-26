@@ -62,6 +62,13 @@ public class MealService {
         findMeal.edit(mealEditDto);
     }
 
+    public void deleteMeal(Long mealId) {
+        plateService.deleteAllByMealId(mealId);
+        Meal meal = mealRepository.findById(mealId)
+                .orElseThrow(() -> new RuntimeException());
+        mealRepository.delete(meal);
+    }
+
 
 
 }

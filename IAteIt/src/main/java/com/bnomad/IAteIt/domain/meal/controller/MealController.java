@@ -39,6 +39,12 @@ public class MealController {
         return ResponseEntity.ok(ResultResponse.of(MEAL_EDIT_SUCCESS));
     }
 
-
-
+    /**
+     * Meal 삭제
+     */
+    @DeleteMapping("")
+    public ResponseEntity<ResultResponse> deleteMeal(@RequestParam("mealId") Long mealId) {
+        mealService.deleteMeal(mealId);
+        return ResponseEntity.ok(ResultResponse.of(MEAL_DELETE_SUCCESS));
+    }
 }
