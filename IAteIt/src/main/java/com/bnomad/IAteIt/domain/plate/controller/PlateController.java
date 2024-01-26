@@ -1,11 +1,14 @@
 package com.bnomad.IAteIt.domain.plate.controller;
 
+import com.bnomad.IAteIt.domain.plate.entity.dto.PlateAddDto;
+import com.bnomad.IAteIt.domain.plate.entity.dto.PlateResponseDto;
 import com.bnomad.IAteIt.domain.plate.service.PlateService;
+import com.bnomad.IAteIt.global.result.ResultResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import static com.bnomad.IAteIt.global.result.ResultCode.*;
 
 @RestController
 @RequestMapping("/api/v1/plate")
@@ -14,8 +17,14 @@ public class PlateController {
 
     private final PlateService plateService;
 
-    
-
+    /**
+     * Plate 1개 추가
+     */
+    @PostMapping("")
+    public ResponseEntity<ResultResponse> addPlate(@ModelAttribute PlateAddDto plateAddDto) {
+        PlateResponseDto response = plateService.addPlate(plateAddDto);
+        return ResponseEntity.ok(ResultResponse.of(PLATE_ADD_SUCCESS, response));
+    }
 
     /**
      * Plate 1개 삭제

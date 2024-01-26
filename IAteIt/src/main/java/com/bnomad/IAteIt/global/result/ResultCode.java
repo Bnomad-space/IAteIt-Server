@@ -29,6 +29,12 @@ public enum ResultCode {
     MEAL_DELETE_SUCCESS(200, "ML003", "Meal 삭제에 성공했습니다"),
 
     /**
+     * Plate
+     */
+
+    PLATE_ADD_SUCCESS(200, "P001", "Plate 추가에 성공했습니다"),
+
+    /**
      * Block
      */
 
