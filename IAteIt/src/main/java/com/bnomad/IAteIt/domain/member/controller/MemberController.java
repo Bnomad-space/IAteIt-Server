@@ -22,7 +22,7 @@ public class MemberController {
      */
     @GetMapping("")
     public ResponseEntity<ResultResponse> memberProfile() {
-        MemberProfileDto findMember = memberService.findById();
+        MemberProfileDto findMember = memberService.getMemberProfile();
         return ResponseEntity.ok(ResultResponse.of(MEMBER_FIND_SUCCESS, findMember));
     }
 
@@ -30,9 +30,18 @@ public class MemberController {
      * 멤버 닉네임 수정
      */
     @PutMapping("")
-    public ResponseEntity<ResultResponse> memberNicknameModify(@ModelAttribute MemberEditRequest memberEditRequest) {
+    public ResponseEntity<ResultResponse> memberNicknameEdit(@ModelAttribute MemberEditRequest memberEditRequest) {
         memberService.editProfile(memberEditRequest);
         return ResponseEntity.ok(ResultResponse.of(MEMBER_EDIT_SUCCESS));
+    }
+
+    /**
+     * 멤버 탈퇴
+     */
+    @DeleteMapping("")
+    public ResponseEntity<ResultResponse> deleteMember() {
+        memberService.deleteMember();
+        return ResponseEntity.ok(ResultResponse.of(MEMBER_DELETE_SUCCESS));
     }
 
 }
