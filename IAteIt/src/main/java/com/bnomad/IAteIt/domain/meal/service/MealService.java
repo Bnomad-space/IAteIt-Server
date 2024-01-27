@@ -43,6 +43,9 @@ public class MealService {
 
 
     public void createMeal(MealCreateDto mealCreateDto) {
+        if (mealCreateDto.getImage() == null) {
+            throw new RuntimeException("이미지가 포함되어 있지 않습니다.");
+        }
         Long currentMemberId = jwtUtil.currentMemberId();
         Member member = memberRepository.findById(currentMemberId)
                 .orElseThrow(() -> new BusinessException());
