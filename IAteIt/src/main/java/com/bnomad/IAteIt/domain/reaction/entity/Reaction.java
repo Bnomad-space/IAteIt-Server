@@ -4,11 +4,9 @@ import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 @Entity
 public class Reaction extends BaseEntity {
 
