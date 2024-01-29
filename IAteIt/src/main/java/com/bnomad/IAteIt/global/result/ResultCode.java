@@ -22,6 +22,13 @@ public enum ResultCode {
     MEMBER_DELETE_SUCCESS(200, "MEM004", "멤버 탈퇴에 성공했습니다"),
 
     /**
+     * Feed
+     */
+    FEED_REQUEST_SUCCESS(200, "F001", "피드 조회에 성공했습니다"),
+    FEED_DONE_SUCCESS(200, "F002", "마지막 페이지입니다."),
+
+
+    /**
      * Meal
      */
 
