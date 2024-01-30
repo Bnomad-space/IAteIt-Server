@@ -12,7 +12,7 @@ import lombok.Getter;
 public class Plate extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "plate_id")
     private Long id;
 

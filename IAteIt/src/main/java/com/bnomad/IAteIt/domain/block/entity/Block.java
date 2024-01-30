@@ -12,7 +12,7 @@ import lombok.Getter;
 public class Block extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "block_id")
     private Long id;
 
