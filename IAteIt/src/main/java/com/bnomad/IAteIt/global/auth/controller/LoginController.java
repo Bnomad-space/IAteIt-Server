@@ -18,6 +18,12 @@ public class LoginController {
     private final LoginService loginService;
 
 
+    @GetMapping("/test")
+    public String joinTest() {
+        return "login";
+    }
+
+
     /**
      * oauth2: accessToken을 헤더에 포함해 리턴
      * accessToken을 활용해 -> 닉네임, 프로필이미지 -> 서비스회원가입
