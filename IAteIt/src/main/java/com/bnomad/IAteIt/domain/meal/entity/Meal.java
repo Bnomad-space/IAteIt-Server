@@ -7,18 +7,21 @@ import com.bnomad.IAteIt.domain.comment.entity.Comment;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.global.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Meal extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_id")
     private Long id;
 
@@ -32,13 +35,9 @@ public class Meal extends BaseEntity {
     @OneToMany(mappedBy = "meal")
     private List<Comment> comments = new ArrayList<>();
 
-
     private String caption;
 
     private String location;
-
-    public Meal() {
-    }
 
     public Meal(MealCreateDto mealCreateDto, Member member) {
         this.caption = mealCreateDto.getCaption();
@@ -49,15 +48,6 @@ public class Meal extends BaseEntity {
     public void edit(MealEditDto mealEditDto) {
         this.caption = mealEditDto.getCaption();
         this.location = mealEditDto.getLocation();
-    }
-
-
-    public void captionChange(String newCaption) {
-        this.caption = newCaption;
-    }
-
-    public void locationChange(String newLocation) {
-        this.location = newLocation;
     }
 
 
