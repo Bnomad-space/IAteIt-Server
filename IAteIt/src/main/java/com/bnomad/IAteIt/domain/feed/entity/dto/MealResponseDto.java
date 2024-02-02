@@ -1,7 +1,6 @@
 package com.bnomad.IAteIt.domain.feed.entity.dto;
 
 import com.bnomad.IAteIt.domain.meal.entity.Meal;
-import com.bnomad.IAteIt.domain.feed.entity.dto.PlateResponseDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +19,9 @@ public class MealResponseDto {
     private LocalDateTime createdDateTime;
     private LocalDateTime modifiedDateTime;
 
-    private List<PlateResponseDto> plates = new ArrayList<>();
+    private List<MealRelatedPlateResponseDto> plates = new ArrayList<>();
 
-    public MealResponseDto(Meal meal, List<PlateResponseDto> plates) {
+    public MealResponseDto(Meal meal, List<MealRelatedPlateResponseDto> plates) {
         this.mealId = meal.getId();
         this.memberId = meal.getMember().getId();
         this.caption = meal.getCaption();

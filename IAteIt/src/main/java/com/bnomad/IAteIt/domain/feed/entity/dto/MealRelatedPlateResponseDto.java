@@ -9,12 +9,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlateResponseDto {
+public class MealRelatedPlateResponseDto {
 
     private LocalDateTime createdDateTime;
     private String imgaeUrl;
 
-    public PlateResponseDto(Plate plate) {
+    public MealRelatedPlateResponseDto(Plate plate) {
         this.createdDateTime = plate.getCreatedDateTime();
         this.imgaeUrl = plate.getImageUrl();
     }

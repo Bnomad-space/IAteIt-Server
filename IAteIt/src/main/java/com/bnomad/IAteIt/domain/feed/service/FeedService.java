@@ -1,7 +1,7 @@
 package com.bnomad.IAteIt.domain.feed.service;
 
 import com.bnomad.IAteIt.domain.feed.entity.dto.MealResponseDto;
-import com.bnomad.IAteIt.domain.feed.entity.dto.PlateResponseDto;
+import com.bnomad.IAteIt.domain.feed.entity.dto.MealRelatedPlateResponseDto;
 import com.bnomad.IAteIt.domain.feed.repository.FeedRepository;
 import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.plate.entity.Plate;
@@ -33,7 +33,7 @@ public class FeedService {
 
         for (Meal meal : meals) {
             List<Plate> plates = plateRepository.findAllByMealId(meal.getId());
-            List<PlateResponseDto> tempPlates = new ArrayList<>();
+            List<MealRelatedPlateResponseDto> tempPlates = new ArrayList<>();
 
             // 하루보다 이전의 데이터는 가져오지 않음
             // 쿼리로 할수도 있고, 가져온 데이터에서 return도 가능
@@ -42,7 +42,7 @@ public class FeedService {
                 break;
             }
             for (Plate plate : plates) {
-                PlateResponseDto plateResponseDto = new PlateResponseDto(plate);
+                MealRelatedPlateResponseDto plateResponseDto = new MealRelatedPlateResponseDto(plate);
                 tempPlates.add(plateResponseDto);
             }
 

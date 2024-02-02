@@ -8,24 +8,4 @@ import java.util.ArrayList;
 
 public class MemberUtil {
 
-    public static Member testMemberMemberRole() {
-        return Member.builder()
-                .nickname("testMember1")
-                .profileImage("http://aaaa")
-                .email("email")
-                .memberRole(Role.MEMBER)
-                .meals(new ArrayList<>())
-                .blockList(new ArrayList<>())
-                .build();
-    }
-
-    public static Member testMemberNoneRole() {
-        return Member.builder()
-                .nickname("testMember2")
-                .profileImage("http://aaaa")
-                .email("email")
-                .meals(new ArrayList<>())
-                .blockList(new ArrayList<>())
-                .build();
-    }
 }
