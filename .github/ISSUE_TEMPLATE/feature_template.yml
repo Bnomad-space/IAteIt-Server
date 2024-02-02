@@ -1,0 +1,22 @@
+name: Feature Template 생성
+description: 새로운 Feature를 추가합니다.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        새로운 Feature를 추가합니다.
+        
+        ---
+  - type: textarea
+    id: feat-description
+    attributes:
+      label: 작업할 내용
+      description: 작업할 내용을 적어주세요
+    validations:
+      required: true
+  - type: textarea
+    id: todo
+    attributes:
+      label: TODO
+      description: 해당 작업을 완료하기 위한 TODO 리스트를 작성해 주세요
+      placeholder: "- [ ] todo1"
