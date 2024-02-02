@@ -7,7 +7,7 @@ import com.bnomad.IAteIt.domain.block.repository.BlockRepository;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import com.bnomad.IAteIt.global.error.BusinessException;
-import com.bnomad.IAteIt.global.error.ErrorCode;
+import com.bnomad.IAteIt.global.error.custom.EntityAlreadyExistException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @RequiredArgsConstructor
 @Transactional
@@ -47,13 +49,13 @@ public class BlockService {
     public BlockedMemberResponse block(BlockingMemberRequest blockingMemberRequest) {
         Long currentMemberId = jwtUtil.currentMemberId();
         Member blockingMember = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
         Member blockedMember = memberRepository.findById(blockingMemberRequest.getBlockedMemberId())
-                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
 
         List<Block> allByBlockingMemberId = blockRepository.findAllByBlockingMemberId(blockingMember.getId());
-        if ((allByBlockingMemberId.stream().filter(a -> (a.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
-            throw new RuntimeException("이미 저장되어 있음");
+        if ((allByBlockingMemberId.stream().filter(findMember -> (findMember.getBlockedMember().getId() == blockedMember.getId())).count() != 0L)) {
+            throw new EntityAlreadyExistException(BLOCKED_ALREADY);
         }
 
         Block block = Block.builder()

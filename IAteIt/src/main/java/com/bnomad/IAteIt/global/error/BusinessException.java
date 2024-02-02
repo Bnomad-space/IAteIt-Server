@@ -1,26 +1,17 @@
 package com.bnomad.IAteIt.global.error;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@Getter
 public class BusinessException extends RuntimeException {
-    public BusinessException() {
-        super();
-    }
 
-    public BusinessException(String message) {
-        super(message);
-    }
-
-    public BusinessException(String message, Throwable cause) {
-        super(message, cause);
-
-    }
-
-    public BusinessException(Throwable cause) {
-        super(cause);
-    }
+    private ErrorCode errorCode;
 
     public BusinessException(ErrorCode errorCode) {
-        super(ErrorResponse.of(errorCode));
-        // super에 errorCode를 날려버리니까 안에서 message 잡아서 메시지 프린트함
+        this.errorCode = errorCode;
     }
 
 }

@@ -15,6 +15,8 @@ import com.bnomad.IAteIt.domain.plate.repository.PlateRepository;
 import com.bnomad.IAteIt.domain.report.entity.Report;
 import com.bnomad.IAteIt.domain.report.repository.ReportRepository;
 import com.bnomad.IAteIt.global.constant.AwsConstant;
+import com.bnomad.IAteIt.global.error.BusinessException;
+
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import com.bnomad.IAteIt.infra.aws.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -58,8 +61,9 @@ public class MemberService {
         return new MemberProfileDto(findMember);
     }
 
-    public Optional<Member> findByEmail(String email) {
-        return memberRepository.findByEmail(email);
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(MEMBER_NOT_FOUND));
     }
 
     public void editProfile(MemberEditRequest memberEditRequest) {
