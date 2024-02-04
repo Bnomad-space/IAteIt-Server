@@ -9,13 +9,15 @@ import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
 import com.bnomad.IAteIt.domain.plate.service.PlateService;
 import com.bnomad.IAteIt.global.constant.AwsConstant;
 import com.bnomad.IAteIt.global.error.BusinessException;
+import com.bnomad.IAteIt.global.error.custom.EntityNotFoundException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import com.bnomad.IAteIt.infra.aws.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
+
 
 @Service
 @Transactional
@@ -44,11 +46,11 @@ public class MealService {
 
     public void createMeal(MealCreateDto mealCreateDto) {
         if (mealCreateDto.getImage() == null) {
-            throw new RuntimeException("이미지가 포함되어 있지 않습니다.");
+            throw new BusinessException(IMAGE_NOT_INCLUDE);
         }
         Long currentMemberId = jwtUtil.currentMemberId();
         Member member = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new BusinessException());
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
 
         String url = s3Uploader.imageUpload(mealCreateDto.getImage(), AwsConstant.PLATE_IMAGE_DIR);
 
@@ -60,7 +62,7 @@ public class MealService {
 
     public void editMeal(MealEditDto mealEditDto) {
         Meal findMeal = mealRepository.findById(mealEditDto.getMealId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEAL_NOT_FOUND));
 
         findMeal.edit(mealEditDto);
     }
@@ -68,7 +70,7 @@ public class MealService {
     public void deleteMeal(Long mealId) {
         plateService.deleteAllByMealId(mealId);
         Meal meal = mealRepository.findById(mealId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEAL_NOT_FOUND));
         mealRepository.delete(meal);
     }
 

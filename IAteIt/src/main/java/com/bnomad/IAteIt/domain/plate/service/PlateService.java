@@ -7,13 +7,15 @@ import com.bnomad.IAteIt.domain.plate.entity.dto.PlateAddDto;
 import com.bnomad.IAteIt.domain.plate.entity.dto.PlateResponseDto;
 import com.bnomad.IAteIt.domain.plate.repository.PlateRepository;
 import com.bnomad.IAteIt.global.constant.AwsConstant;
+import com.bnomad.IAteIt.global.error.custom.EntityNotFoundException;
 import com.bnomad.IAteIt.infra.aws.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @Service
 @Transactional
@@ -40,7 +42,7 @@ public class PlateService {
     public PlateResponseDto addPlate(PlateAddDto plateAddDto) {
         Long mealId = plateAddDto.getMealId();
         Meal meal = mealRepository.findById(mealId)
-                .orElseThrow(() -> new RuntimeException("해당 mealId가 없습니다"));
+                .orElseThrow(() -> new EntityNotFoundException(MEAL_NOT_FOUND));
         String url = s3Uploader.imageUpload(plateAddDto.getImage(), AwsConstant.PLATE_IMAGE_DIR);
         Plate savedPlate = plateRepository.save(new Plate(meal, url));
         return new PlateResponseDto(savedPlate);
@@ -53,11 +55,11 @@ public class PlateService {
 
     public void deletePlate(Long plateId) {
         Plate plate = plateRepository.findById(plateId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(PLATE_NOT_FOUND));
         List<Plate> plates = plateRepository.findAllByMealId(plate.getMeal().getId());
         if (plates.size() == 1) {
             Meal meal = mealRepository.findById(plate.getMeal().getId())
-                    .orElseThrow(() -> new RuntimeException());
+                    .orElseThrow(() -> new EntityNotFoundException(MEAL_NOT_FOUND));
             mealRepository.delete(meal);
         }
         s3Uploader.deleteImage(plate.getImageUrl());

@@ -1,10 +1,13 @@
 package com.bnomad.IAteIt.global.util;
 
+import com.bnomad.IAteIt.global.error.BusinessException;
 import com.bnomad.IAteIt.global.vo.Image;
 import com.bnomad.IAteIt.global.vo.ImageType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 public class ImageUtil {
 
@@ -17,7 +20,7 @@ public class ImageUtil {
         ImageType type = ImageType.valueOf(imageType);
 
         if (type == null) {
-            throw new RuntimeException("파일 형식이 맞지 않습니다");
+            throw new BusinessException(FILE_FORMAT_ERROR);
         }
 
         return Image.builder()

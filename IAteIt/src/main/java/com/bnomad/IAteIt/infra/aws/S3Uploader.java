@@ -2,6 +2,7 @@ package com.bnomad.IAteIt.infra.aws;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.bnomad.IAteIt.global.error.BusinessException;
 import com.bnomad.IAteIt.global.util.ImageUtil;
 import com.bnomad.IAteIt.global.vo.Image;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
@@ -43,8 +46,6 @@ public class S3Uploader {
         String fileName = url.split("/")[4];
 
         String filepath = dir + "/" + fileName;
-        System.out.println("url = " + url);
-        System.out.println("filepath = " + filepath);
         amazonS3Client.deleteObject(bucket, filepath);
     }
 
@@ -52,7 +53,6 @@ public class S3Uploader {
         if (file.delete()) {
             return;
         }
-        System.out.println("file = " + file);
     }
 
     private File convertMultipartFileToLocalFile(MultipartFile file) {
@@ -65,9 +65,9 @@ public class S3Uploader {
                 }
                 return convertFile;
             }
-            throw new RuntimeException();
+            throw new BusinessException(FILE_CONVERT_ERROR);
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new BusinessException(FILE_CONVERT_ERROR);
         }
     }
 

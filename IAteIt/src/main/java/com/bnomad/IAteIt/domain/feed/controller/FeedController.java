@@ -25,9 +25,7 @@ public class FeedController {
     @GetMapping("")
     public ResponseEntity<ResultResponse> getRecent(@RequestParam("page") int pageNum) {
         List<MealResponseDto> feedWithPage = feedService.getFeedWithPage(pageNum);
-        if (feedWithPage.size() == 0) {
-            throw new RuntimeException("페이지가 없습니다");
-        } else if (feedWithPage.size() != 5) {
+        if (feedWithPage.size() != 5) {
             return ResponseEntity.ok(ResultResponse.of(FEED_DONE_SUCCESS, feedWithPage));
         } else {
             return ResponseEntity.ok(ResultResponse.of(FEED_REQUEST_SUCCESS, feedWithPage));

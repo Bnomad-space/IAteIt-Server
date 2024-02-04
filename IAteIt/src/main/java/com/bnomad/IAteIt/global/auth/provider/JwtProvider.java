@@ -32,9 +32,7 @@ public class JwtProvider {
 
     @PostConstruct
     protected void init() {
-        System.out.println("SECRETKEY = " + SECRETKEY);
         SECRETKEY = Base64.getEncoder().encodeToString(SECRETKEY.getBytes());
-        System.out.println("SECRETKEY = " + SECRETKEY);
     }
 
     public String createToken(String userEmail, List<String> roleList) {
@@ -52,16 +50,16 @@ public class JwtProvider {
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
-        String email = Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(token).getBody().getSubject();
+        String email = Jwts.parser()
+                .setSigningKey(SECRETKEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
 
         // 해당 구현을 Username으로 하지 않고, 멤버의 email로 구현함
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-        System.out.println("email = " + email); // email
-        System.out.println("userDetails = " + userDetails.getPassword()); // email
-        for (GrantedAuthority authority : userDetails.getAuthorities()) {
-            System.out.println("authority = " + authority.getAuthority()); // MEMBER
-        }
-        System.out.println("userDetails = " + userDetails.getUsername()); // member pk값
+        // System.out.println("userDetails = " + userDetails.getUsername()); // member pk값
+        // System.out.println("userDetails = " + userDetails.getPassword()); // email
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -73,12 +71,10 @@ public class JwtProvider {
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
-            System.out.println("jwtToken = " + jwtToken);
             Jws<Claims> claims = Jwts.parser().setSigningKey(SECRETKEY).parseClaimsJws(jwtToken);
-
             return claims.getBody().getExpiration().before(new Date()) == false;
         } catch (Exception e) {
-            System.out.println("e = " + e.getLocalizedMessage());
+            System.out.println("validateToken e = " + e.getLocalizedMessage());
             return false;
         }
     }
