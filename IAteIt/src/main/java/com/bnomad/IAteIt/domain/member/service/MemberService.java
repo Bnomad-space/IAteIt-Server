@@ -17,6 +17,7 @@ import com.bnomad.IAteIt.domain.report.repository.ReportRepository;
 import com.bnomad.IAteIt.global.constant.AwsConstant;
 import com.bnomad.IAteIt.global.error.BusinessException;
 
+import com.bnomad.IAteIt.global.error.custom.EntityNotFoundException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import com.bnomad.IAteIt.infra.aws.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -82,7 +83,7 @@ public class MemberService {
         // report -> comment -> plate (s3 이미지 삭제) -> meal -> block -> member (s3 이미지 삭제)
         Long currentMemberId = jwtUtil.currentMemberId();
         Member member = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
 
         // report
         List<Report> reports = reportRepository.findAllByMemberId(currentMemberId);

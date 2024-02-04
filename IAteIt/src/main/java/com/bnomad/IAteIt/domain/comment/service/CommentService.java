@@ -9,6 +9,8 @@ import com.bnomad.IAteIt.domain.meal.entity.Meal;
 import com.bnomad.IAteIt.domain.meal.repository.MealRepository;
 import com.bnomad.IAteIt.domain.member.entity.Member;
 import com.bnomad.IAteIt.domain.member.repository.MemberRepository;
+import com.bnomad.IAteIt.global.error.BusinessException;
+import com.bnomad.IAteIt.global.error.custom.EntityNotFoundException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,10 +46,10 @@ public class CommentService {
     public CommentResponseDto createComment(CommentCreateDto commentCreateDto) {
         Long currentMemberId = jwtUtil.currentMemberId();
         Member member = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
 
         Meal meal = mealRepository.findById(commentCreateDto.getMealId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
 
         Comment comment = new Comment(member, meal, commentCreateDto);
         Comment savedComment = commentRepository.save(comment);
@@ -55,7 +59,7 @@ public class CommentService {
     public CommentResponseDto editComment(CommentEditDto commentEditDto) {
         Long commentId = commentEditDto.getCommentId();
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(COMMENT_NOT_FOUND));
 
         comment.edit(commentEditDto);
         return new CommentResponseDto(comment);
@@ -63,12 +67,12 @@ public class CommentService {
 
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(COMMENT_NOT_FOUND));
         Long currentMemberId = jwtUtil.currentMemberId();
         if (comment.getFromMember().getId() == currentMemberId) {
             commentRepository.delete(comment);
         } else {
-            new RuntimeException("코멘트를 지울 수 없는 유저입니다.");
+            throw new BusinessException(COMMENT_DELETE_NO_AUTH);
         }
     }
 }

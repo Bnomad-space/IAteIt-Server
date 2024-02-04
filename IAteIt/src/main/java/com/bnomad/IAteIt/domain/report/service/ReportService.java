@@ -8,9 +8,12 @@ import com.bnomad.IAteIt.domain.report.entity.Report;
 import com.bnomad.IAteIt.domain.report.entity.dto.ReportRequestDto;
 import com.bnomad.IAteIt.domain.report.entity.dto.ReportResponseDto;
 import com.bnomad.IAteIt.domain.report.repository.ReportRepository;
+import com.bnomad.IAteIt.global.error.custom.EntityNotFoundException;
 import com.bnomad.IAteIt.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.bnomad.IAteIt.global.error.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +34,10 @@ public class ReportService {
     public ReportResponseDto report(ReportRequestDto reportRequestDto) {
         Long currentMemberId = jwtUtil.currentMemberId();
         Member member = memberRepository.findById(currentMemberId)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
 
         Meal meal = mealRepository.findById(reportRequestDto.getMealId())
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new EntityNotFoundException(MEAL_NOT_FOUND));
 
         Report report = new Report(member, meal, reportRequestDto.getReason());
         Report savedReport = reportRepository.save(report);
