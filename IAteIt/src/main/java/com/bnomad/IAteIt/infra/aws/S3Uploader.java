@@ -53,7 +53,6 @@ public class S3Uploader {
         if (file.delete()) {
             return;
         }
-        System.out.println("file = " + file);
     }
 
     private File convertMultipartFileToLocalFile(MultipartFile file) {

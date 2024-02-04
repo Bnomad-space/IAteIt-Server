@@ -68,7 +68,7 @@ public class CustomUserOAuth2Service implements OAuth2UserService<OAuth2UserRequ
         Optional<Member> findMember = memberRepository.findByEmail(attributes.getEmail());
 
         if (findMember.isPresent()) {
-            System.out.println("기존 멤버, Token Refresh를 하거나 혹은 넘어가거나");
+            System.out.println("기존 멤버");
             return findMember.get();
         } else {
             Member savedMember = memberRepository.save(buildMember);
