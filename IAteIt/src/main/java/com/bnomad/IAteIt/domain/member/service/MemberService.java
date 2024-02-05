@@ -58,7 +58,7 @@ public class MemberService {
     public MemberProfileDto getMemberProfile() {
         Long memberId = jwtUtil.currentMemberId();
         Member findMember = memberRepository.findById(memberId)
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
         return new MemberProfileDto(findMember);
     }
 
@@ -70,7 +70,7 @@ public class MemberService {
     public void editProfile(MemberEditRequest memberEditRequest) {
         Long currentMemberId = jwtUtil.currentMemberId();
         Member findMember = memberRepository.findById(currentMemberId)
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND));
         String url = "";
         if (memberEditRequest.getProfileImage() != null) {
             s3Uploader.deleteImage(findMember.getProfileImage());
