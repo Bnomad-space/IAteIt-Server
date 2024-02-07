@@ -18,7 +18,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequestMapping("/api/v1/feed")
 @RequiredArgsConstructor
-public class FeedController {
+public class FeedController implements FeedControllerSwagger {
 
     private final FeedService feedService;
 
