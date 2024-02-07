@@ -16,7 +16,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequestMapping("/api/v1/comment")
 @RequiredArgsConstructor
-public class CommentController {
+public class CommentController implements CommentControllerSwagger {
 
     private final CommentService commentService;
 
