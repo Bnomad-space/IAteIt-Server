@@ -17,8 +17,9 @@ public interface FeedControllerSwagger {
     @ApiResponses(
             value = {
                     @ApiResponse(responseCode = "200", description = "최근 Feed 가져오기에 성공했습니다.",
-                    content = @Content(contentSchema = @Schema(implementation = ResultResponse.class)))
-            })
+                            content = @Content(schema = @Schema(implementation = ResultResponse.class))),
+            }
+    )
     ResponseEntity<ResultResponse> getRecent(@RequestParam("page") int pageNum);
 
 }
