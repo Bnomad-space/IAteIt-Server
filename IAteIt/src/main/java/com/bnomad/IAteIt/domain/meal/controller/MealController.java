@@ -14,7 +14,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/meal")
-public class MealController {
+public class MealController implements MealControllerSwagger {
 
     private final MealService mealService;
 
