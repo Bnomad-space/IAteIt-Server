@@ -83,14 +83,15 @@ public class WebSecurityConfig {
 
                 .authorizeHttpRequests(auth ->
                                 auth
-//                                        .requestMatchers(HttpMethod.POST, "/api/public/**")
-//                                        .permitAll()
                                         .requestMatchers("/api/v1/join")
                                         .permitAll()
-
+                                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**")
+                                        .permitAll()
                                         .anyRequest()
                                         .authenticated()
-                )
+                );
+
+        http
                 .oauth2Login(oauth2 ->
                         // oauth2 인증이 끝나면 잡아가는 포인트
                         oauth2
@@ -100,12 +101,14 @@ public class WebSecurityConfig {
                                 )
                                 // 성공하면, jwt 발급해주는 역할
                                 .successHandler(customAuthenticationHandler())
-                )
+                );
 
-                // UsernamePasswordAuthenticationFileter에 들어가기 전 JwtAuthenticationFilter를 실행하겠습니다~
+        // UsernamePasswordAuthenticationFileter에 들어가기 전 JwtAuthenticationFilter를 실행하겠습니다~
+        http
                 .addFilterBefore(
                         new JwtAuthenticationFilter(jwtProvider, jwtUtil), UsernamePasswordAuthenticationFilter.class
                 );
+
 
         return http.build();
     }

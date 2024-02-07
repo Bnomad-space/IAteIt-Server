@@ -13,7 +13,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.REPORT_CREATE_SUCCESS;
 @RestController
 @RequestMapping("/api/v1/report")
 @RequiredArgsConstructor
-public class ReportController {
+public class ReportController implements ReportControllerSwagger {
 
     private final ReportService reportService;
 

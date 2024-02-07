@@ -13,15 +13,9 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequestMapping("/api/v1/join")
 @RequiredArgsConstructor
-public class LoginController {
+public class LoginController implements LoginControllerSwagger {
 
     private final LoginService loginService;
-
-
-    @GetMapping("/test")
-    public String joinTest() {
-        return "login";
-    }
 
 
     /**

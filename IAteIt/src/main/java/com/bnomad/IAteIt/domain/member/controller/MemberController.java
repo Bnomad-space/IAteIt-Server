@@ -13,7 +13,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/member")
-public class MemberController {
+public class MemberController implements MemberControllerSwagger {
 
     private final MemberService memberService;
 

@@ -15,7 +15,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequestMapping("/api/v1/block")
 @RequiredArgsConstructor
-public class BlockController {
+public class BlockController implements BlockControllerSwagger {
 
     private final BlockService blockService;
 

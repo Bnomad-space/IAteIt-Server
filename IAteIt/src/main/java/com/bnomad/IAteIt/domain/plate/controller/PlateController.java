@@ -13,7 +13,7 @@ import static com.bnomad.IAteIt.global.result.ResultCode.*;
 @RestController
 @RequestMapping("/api/v1/plate")
 @RequiredArgsConstructor
-public class PlateController {
+public class PlateController implements PlateControllerSwagger {
 
     private final PlateService plateService;
 
