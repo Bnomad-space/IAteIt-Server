@@ -5,6 +5,7 @@ import com.bnomad.IAteIt.domain.meal.entity.dto.MealEditDto;
 import com.bnomad.IAteIt.global.error.ErrorResponse;
 import com.bnomad.IAteIt.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,7 +29,12 @@ public interface MealControllerSwagger {
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             }
     )
-    ResponseEntity<ResultResponse> createMeal(@ModelAttribute MealCreateDto mealCreateDto);
+    ResponseEntity<ResultResponse> createMeal(
+            @RequestBody(
+                    content = @Content(mediaType = "multipart/form-data",
+                    schema = @Schema(implementation = MealCreateDto.class))
+            )
+            @ModelAttribute MealCreateDto mealCreateDto);
 
     @Operation(summary = "Meal 수정하기")
     @ApiResponses(

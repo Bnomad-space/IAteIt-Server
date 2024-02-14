@@ -6,6 +6,7 @@ import com.bnomad.IAteIt.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +27,12 @@ public interface PlateControllerSwagger {
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
-    ResponseEntity<ResultResponse> addPlate(@ModelAttribute PlateAddDto plateAddDto);
+    ResponseEntity<ResultResponse> addPlate(
+            @RequestBody(
+                    content = @Content(mediaType = "multipart/form-data",
+                    schema = @Schema(implementation = PlateAddDto.class))
+            )
+            @ModelAttribute PlateAddDto plateAddDto);
 
     @Operation(summary = "Plate 삭제하기")
     @ApiResponses(

@@ -27,6 +27,11 @@ public interface LoginControllerSwagger {
 
             }
     )
-    ResponseEntity<ResultResponse> join(@ModelAttribute JoinRequestDto joinRequestDto);
+    ResponseEntity<ResultResponse> join(
+            @RequestBody(
+                    content = @Content(mediaType = "multipart/form-data",
+                    schema = @Schema(implementation = JoinRequestDto.class))
+            )
+            @ModelAttribute JoinRequestDto joinRequestDto);
 
 }
