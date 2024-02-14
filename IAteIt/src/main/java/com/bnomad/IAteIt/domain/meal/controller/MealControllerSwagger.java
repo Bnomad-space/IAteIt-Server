@@ -31,6 +31,7 @@ public interface MealControllerSwagger {
     )
     ResponseEntity<ResultResponse> createMeal(
             @RequestBody(
+                    required = true,
                     content = @Content(mediaType = "multipart/form-data",
                     schema = @Schema(implementation = MealCreateDto.class))
             )

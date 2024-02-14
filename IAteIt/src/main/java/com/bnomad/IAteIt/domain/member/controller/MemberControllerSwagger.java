@@ -38,9 +38,9 @@ public interface MemberControllerSwagger {
             }
     )
     ResponseEntity<ResultResponse> memberNicknameEdit(
-            @RequestBody(content =
-            @Content(
-                    mediaType = "multipart/form-data",
+            @RequestBody(
+                    required = true,
+                    content = @Content(mediaType = "multipart/form-data",
                     schema = @Schema(implementation = MemberEditRequest.class))
             ) @ModelAttribute MemberEditRequest memberEditRequest);
 

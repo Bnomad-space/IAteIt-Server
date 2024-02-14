@@ -29,6 +29,7 @@ public interface PlateControllerSwagger {
     )
     ResponseEntity<ResultResponse> addPlate(
             @RequestBody(
+                    required = true,
                     content = @Content(mediaType = "multipart/form-data",
                     schema = @Schema(implementation = PlateAddDto.class))
             )
