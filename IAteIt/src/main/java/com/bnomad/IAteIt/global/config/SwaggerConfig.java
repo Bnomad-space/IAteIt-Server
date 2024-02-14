@@ -21,6 +21,8 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
+    static String AUTHORIZATION_HEADER = "Authorization";
+
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
@@ -31,7 +33,7 @@ public class SwaggerConfig {
 
     private List<SecurityRequirement> getSecurityRequirement() {
         List<SecurityRequirement> requirements = new ArrayList<>();
-        requirements.add(new SecurityRequirement().addList("Authorization"));
+        requirements.add(new SecurityRequirement().addList(AUTHORIZATION_HEADER));
         return requirements;
     }
 

@@ -1,11 +1,13 @@
 package com.bnomad.IAteIt.domain.member.controller;
 
 import com.bnomad.IAteIt.domain.member.entity.dto.MemberEditRequest;
+import com.bnomad.IAteIt.domain.member.entity.dto.MemberProfileDto;
 import com.bnomad.IAteIt.global.error.ErrorResponse;
 import com.bnomad.IAteIt.global.result.ResultResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +37,12 @@ public interface MemberControllerSwagger {
                             content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
             }
     )
-    ResponseEntity<ResultResponse> memberNicknameEdit(@ModelAttribute MemberEditRequest memberEditRequest);
+    ResponseEntity<ResultResponse> memberNicknameEdit(
+            @RequestBody(
+                    required = true,
+                    content = @Content(mediaType = "multipart/form-data",
+                    schema = @Schema(implementation = MemberEditRequest.class))
+            ) @ModelAttribute MemberEditRequest memberEditRequest);
 
     @Operation(summary = "Member 삭제")
     @ApiResponses(
