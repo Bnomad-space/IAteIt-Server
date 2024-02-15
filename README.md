@@ -7,4 +7,5 @@
 Easily share and connect with others about what you’ve eaten today. When you're pondering what to eat, take a peek at others’ delicious food photos for some inspiration. No need to worry about capturing picture-perfect shots. Your posts will disappear from others' view after 24 hours.
 
 ### ERD
-<img width="800" alt="IAteIt ERD" src="https://github.com/Bnomad-space/IAteIt-Server/assets/72736657/7b0c9225-b777-4516-89ea-bd7ff8f00dc0">
+
+<img width="800" alt="스크린샷 2024-02-15 19 09 39" src="https://github.com/Bnomad-space/IAteIt-Server/assets/72736657/8f9c83e2-110b-42ad-9c07-38285cc2347a">
